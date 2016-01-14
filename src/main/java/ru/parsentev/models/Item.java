@@ -11,7 +11,8 @@ public class Item {
 
 	public String author;
 
-	public Comment[] comments;
+	public Comment[] comments = new Comment[10];
+	public int positionComment = 0;
 
 	public Item() {
 
@@ -41,5 +42,13 @@ public class Item {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public Comment[] getAllComments() {
+		Comment[] result = new Comment[positionComment];
+		for (int index=0; index!=positionComment; index++) {
+			result[index] = this.comments[index];
+		}
+		return result;
 	}
 }

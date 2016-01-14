@@ -19,5 +19,11 @@ public class StartUI {
 		for (Item item : tracker.getAll()) {
 			System.out.println(item.getName());
 		}
+
+		tracker.addComment(task, new Comment("desc", 10l));
+
+		for(Comment comment : task.getAllComments()) {
+			System.out.println(comment.desc + " " + comment.createDate);
+		}
 	}
 }

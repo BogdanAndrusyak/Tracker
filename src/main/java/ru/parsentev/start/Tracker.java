@@ -77,9 +77,7 @@ public class Tracker {
 		return result;
 	}
 
-	public void addComment(String comment) {
-
+	public void addComment(Item item, Comment comment) {
+		item.comments[item.positionComment++] = comment;
 	}
-
-	
 }
