@@ -3,10 +3,18 @@ package ru.parsentev.start;
 import ru.parsentev.models.*;
 
 public class StartUI {
+	
+	private Input input;
 
-	public static void main(String[] args) {
+	public StartUI(Input input) {
+		this.input = input;
+	}
+
+	public void init() {
+		String name = input.ask("Please enter the task`s name: ");
+
 		Tracker tracker = new Tracker();
-		Task task = new Task("first task", "first desc");
+		Task task = new Task(name, "first desc");
 
 		tracker.add(task);
 
@@ -25,5 +33,10 @@ public class StartUI {
 		for(Comment comment : task.getAllComments()) {
 			System.out.println(comment.desc + " " + comment.createDate);
 		}
+	}
+
+	public static void main(String[] args) {
+		Input input = new ConsoleInput();
+		new StartUI(input).init();
 	}
 }
