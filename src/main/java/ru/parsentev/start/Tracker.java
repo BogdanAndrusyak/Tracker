@@ -37,19 +37,21 @@ public class Tracker {
 		return result;
 	}
 
-	public void edit(Item newItem, Item oldItem) {
+	public void edit(Item oldItem, Item newItem) {
 		for(int i = 0; i < items.length; i++) {
-			if(items[i].getId().equals(oldItem.getId())) {
+			if(items[i] != null && items[i].getId().equals(oldItem.getId())) {
 				items[i] = newItem;
+				newItem.setId(this.generateId());
 				break;
 			}
 		}
 	}
 
 	public void delete(String id) {
-		for(Item item : items) {
-			if(item.getId().equals(id)) {
-				item = null;
+		for(int i = 0; i < items.length; i++) {
+			if(items[i] != null && items[i].getId().equals(id)) {
+				items[i] = null;
+				position--;
 				break;
 			}
 		}

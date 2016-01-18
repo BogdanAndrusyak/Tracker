@@ -1,5 +1,7 @@
 package ru.parsentev.start;
 
+import ru.parsentev.models.*;
+
 public class StubInput implements Input {
 
 	private String[] answers;

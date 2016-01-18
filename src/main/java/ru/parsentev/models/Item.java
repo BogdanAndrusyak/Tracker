@@ -1,6 +1,7 @@
 package ru.parsentev.models;
 
 public class Item {
+	
 	private String id;
 
 	public String name;

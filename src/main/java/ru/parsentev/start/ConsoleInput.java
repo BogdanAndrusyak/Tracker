@@ -1,5 +1,6 @@
 package ru.parsentev.start;
 
+import ru.parsentev.models.*;
 import java.util.*;
 
 public class ConsoleInput implements Input {
