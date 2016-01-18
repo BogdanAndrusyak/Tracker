@@ -14,26 +14,45 @@ public class StartUI {
 
 	public void init() {
 		
-		tracker.add(add());
+		Menu menu = new Menu(input);
 
-		Item item = findByName();
-		edit();
-		addComment();
-		showAllItems();
-		delete();
-		showAllItems();
+		menu.addEntry(new MenuEntry("Add Task") {
+			public void run() {
+				tracker.add(add());
+			}
+		});
 
-		/*tracker.edit(new Task("second task", "second desc"), task);
+		menu.addEntry(new MenuEntry("Find by name Task") {
+			public void run() {
+				Item item = findByName();
+			}
+		});
 
-		for (Item item : tracker.getAll()) {
-			System.out.println(item.getName());
-		}
+		menu.addEntry(new MenuEntry("Add comment to Task") {
+			public void run() {
+				addComment();
+			}
+		});
 
-		tracker.addComment(task, new Comment("desc", 10l));
+		menu.addEntry(new MenuEntry("Edit Task") {
+			public void run() {
+				edit();
+			}
+		});
 
-		for(Comment comment : task.getAllComments()) {
-			System.out.println(comment.desc + " " + comment.createDate);
-		}*/
+		menu.addEntry(new MenuEntry("Show all tasks") {
+			public void run() {
+				showAllItems();
+			}
+		});
+
+		menu.addEntry(new MenuEntry("Delete Task") {
+			public void run() {
+				delete();
+			}
+		});
+		
+		menu.run();
 	}
 
 	public static void main(String[] args) {
