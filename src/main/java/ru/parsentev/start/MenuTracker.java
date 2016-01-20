@@ -18,7 +18,7 @@ class EditItem implements UserAction {
 	}
 
 	public String info() {
-		return String.format("%s. %s", this.key(), "Edit the item.");
+		return String.format("%s - %s", this.key(), "Edit the item.");
 	}
 }
 
@@ -46,7 +46,8 @@ public class MenuTracker {
 	}
 
 	public void show() {
-		System.out.println();
+		System.out.println("\nMenu:");
+
 		for (UserAction action : this.actions) {
 			if (action != null) {
 				System.out.println(action.info());
@@ -66,7 +67,7 @@ public class MenuTracker {
 		}
 
 		public String info() {
-			return String.format("%s. %s", this.key(), "Add the new item.");
+			return String.format("%s - %s", this.key(), "Add the new item.");
 		}
 	}
 
@@ -84,7 +85,7 @@ public class MenuTracker {
 		}
 
 		public String info() {
-			return String.format("%s. %s", this.key(), "Show all items.");
+			return String.format("%s - %s", this.key(), "Show all items.");
 		}
 	}
 
@@ -99,14 +100,14 @@ public class MenuTracker {
 			for (Item item : tracker.getAll()) {
 				if (name.equals(item.getName())) {
 					System.out.println(
-						String.format("%s. %s", item.getId(), item.getName())
+						String.format("ID: %s, Name: %s", item.getId(), item.getName())
 					);
 				}
 			}
 		}
 
 		public String info() {
-			return String.format("%s. %s", this.key(), "Find item by name.");
+			return String.format("%s - %s", this.key(), "Find item by name.");
 		}
 	}
 
@@ -121,7 +122,7 @@ public class MenuTracker {
 		}
 
 		public String info() {
-			return String.format("%s. %s", this.key(), "Delete item.");
+			return String.format("%s - %s", this.key(), "Delete item.");
 		}
 	}
 
@@ -138,7 +139,7 @@ public class MenuTracker {
 		}
 
 		public String info() {
-			return String.format("%s. %s", this.key(), "Add comment.");
+			return String.format("%s - %s", this.key(), "Add comment.");
 		}
 	}
 }
