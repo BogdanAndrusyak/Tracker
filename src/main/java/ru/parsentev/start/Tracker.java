@@ -6,7 +6,8 @@ import java.util.*;
 public class Tracker {
 	private Item[] items = new Item[10];
 	private int position = 0;
-	private static final Random RN = new Random();
+	private int idPosition = 100;
+	//private static final Random RN = new Random();
 
 	public Item add(Item item) {
 		item.setId(this.generateId());
@@ -26,7 +27,8 @@ public class Tracker {
 	}
 
 	String generateId() {
-		return String.valueOf(System.currentTimeMillis() + RN.nextInt());
+		//return String.valueOf(System.currentTimeMillis() + RN.nextInt());
+		return String.valueOf(idPosition++);
 	}
 
 	public Item[] getAll() {
@@ -37,11 +39,10 @@ public class Tracker {
 		return result;
 	}
 
-	public void edit(Item oldItem, Item newItem) {
+	public void edit(Item item) {
 		for(int i = 0; i < items.length; i++) {
-			if(items[i] != null && items[i].getId().equals(oldItem.getId())) {
-				items[i] = newItem;
-				newItem.setId(this.generateId());
+			if(items[i] != null && item.getId().equals(items[i].getId())) {
+				items[i] = item;
 				break;
 			}
 		}
@@ -51,7 +52,7 @@ public class Tracker {
 		for(int i = 0; i < items.length; i++) {
 			if(items[i] != null && items[i].getId().equals(id)) {
 				items[i] = null;
-				position--;
+				position--; 
 				break;
 			}
 		}
@@ -79,7 +80,11 @@ public class Tracker {
 		return result;
 	}
 
-	public void addComment(Item item, Comment comment) {
-		item.comments[item.positionComment++] = comment;
+	public void addComment(String id, Comment comment) {
+		for (int i = 0; i < items.length; i++) {
+			if (items[i] != null && id.equals(items[i].getId())) {
+				items[i].comments[items[i].positionComment++] = comment;
+			}
+		}
 	}
 }

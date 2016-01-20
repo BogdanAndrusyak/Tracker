@@ -13,8 +13,17 @@ public class StartUI {
 	}
 
 	public void init() {
+		Tracker tracker = new Tracker();
+		MenuTracker menu = new MenuTracker(this.input, tracker);
+		menu.fillActions();
+		do {
+			menu.show();
+			int key = Integer.valueOf(input.ask("Select: "));
+			menu.select(key);
+		} while(!"y".equals(this.input.ask("Exit?(y): ")));
 		
-		Menu menu = new Menu(input);
+		// Old menu...
+		/*Menu menu = new Menu(input);
 
 		menu.addEntry(new MenuEntry("Add Task") {
 			public void run() {
@@ -52,15 +61,15 @@ public class StartUI {
 			}
 		});
 		
-		menu.run();
+		menu.run();*/
 	}
 
 	public static void main(String[] args) {
 		Input input = new ConsoleInput();
 		new StartUI(input).init();
 	}
-
-	public Item add() {
+	// Old methods...
+	/*public Item add() {
 		String name = input.ask("Please enter the task's name: ");
 		String desc = input.ask("Please enter the task's description: ");
 
@@ -77,7 +86,7 @@ public class StartUI {
 		String newName = input.ask("Please enter the new task's name: ");
 		String newDesc = input.ask("Please enter the new task's description: ");
 
-		tracker.edit(tracker.findByName(oldName), new Task(newName, newDesc));
+		tracker.edit();
 	}
 
 	public void delete() {
@@ -99,5 +108,5 @@ public class StartUI {
 				System.out.println(item.getName());
 			}
 		}
-	}
+	}*/
 }
