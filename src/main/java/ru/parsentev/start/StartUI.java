@@ -4,7 +4,7 @@ import ru.parsentev.models.*;
 import java.util.*;
 
 public class StartUI {
-	
+	private int[] ranges;
 	private Input input;
 	private Tracker tracker = new Tracker();
 
@@ -16,15 +16,15 @@ public class StartUI {
 		Tracker tracker = new Tracker();
 		MenuTracker menu = new MenuTracker(this.input, tracker);
 		menu.fillActions();
+		ranges = menu.getRanges();
 		do {
 			menu.show();
-			int key = Integer.valueOf(input.ask("Select: "));
-			menu.select(key);
+			menu.select(input.ask("Select: ", this.ranges));
 		} while(!"y".equals(this.input.ask("Exit?(y): ")));
 	}
 
 	public static void main(String[] args) {
-		Input input = new ConsoleInput();
+		Input input = new ValidateInput();
 		new StartUI(input).init();
 	}
 }

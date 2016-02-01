@@ -41,6 +41,11 @@ public class MenuTracker {
 		this.actions[5] = new MenuTracker.AddComment();
 	}
 
+	public int[] getRanges() {
+		int[] ranges = new int[] {0, 1, 2, 3, 4, 5};
+		return ranges;
+	}
+
 	public void select(int key) {
 		this.actions[key].execute(this.input, this.tracker);
 	}
