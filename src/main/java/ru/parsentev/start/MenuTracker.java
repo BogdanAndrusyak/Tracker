@@ -9,12 +9,30 @@ class EditItem implements UserAction {
 	}
 
 	public void execute(Input input, Tracker tracker) {
-		String id = input.ask("Please enter the task's id: ");
-		String name = input.ask("Please enter the new task's name: ");
-		String desc = input.ask("Please enter the new task's desc: ");
-		Task task = new Task(name, desc);
-		task.setId(id);
-		tracker.edit(task);
+		
+		if (tracker.getAll().length != 0) {
+			String id;
+			boolean correctId = false;
+			do {
+				id = input.ask("Please enter the task's id: ");
+				for (Item item : tracker.getAll()) {
+					if (id.equals(item.getId())) {
+						correctId = true;
+						break;
+					} else {
+						System.out.println("ID doesn't correct.");
+					}
+				}
+			} while (!correctId);
+
+			String name = input.ask("Please enter the new task's name: ");
+			String desc = input.ask("Please enter the new task's desc: ");
+			Task task = new Task(name, desc);
+			task.setId(id);
+			tracker.edit(task);
+		} else {
+			System.out.println("No items.");
+		}
 	}
 
 	public String info() {
@@ -82,10 +100,14 @@ public class MenuTracker {
 		}
 
 		public void execute(Input input, Tracker tracker) {
-			for (Item item : tracker.getAll()) {
-				System.out.println(
-					String.format("ID: %s, Name: %s.", item.getId(), item.getName())
-				);
+			if(tracker.getAll().length != 0) {
+				for (Item item : tracker.getAll()) {
+					System.out.println(
+						String.format("ID: %s, Name: %s.", item.getId(), item.getName())
+					);
+				}
+			} else {
+				System.out.println("No items.");
 			}
 		}
 
@@ -100,14 +122,30 @@ public class MenuTracker {
 		}
 
 		public void execute(Input input, Tracker tracker) {
-			String name = input.ask("Please enter the task's name: ");
-			
-			for (Item item : tracker.getAll()) {
-				if (name.equals(item.getName())) {
-					System.out.println(
-						String.format("ID: %s, Name: %s", item.getId(), item.getName())
-					);
+			if (tracker.getAll().length != 0) {
+				String name;
+				boolean correctName = false;
+				do {
+					name = input.ask("Please enter the task's name: ");
+					for (Item item : tracker.getAll()) {
+						if (name.equals(item.getName())) {
+							correctName = true;
+							break;
+						} else {
+							System.out.println("Name doesn't correct.");
+						}
+					}
+				} while (!correctName);
+
+				for (Item item : tracker.getAll()) {
+					if (name.equals(item.getName())) {
+						System.out.println(
+							String.format("ID: %s, Name: %s", item.getId(), item.getName())
+						);
+					}
 				}
+			} else {
+				System.out.println("No items.");
 			}
 		}
 
@@ -122,8 +160,24 @@ public class MenuTracker {
 		}
 
 		public void execute(Input input, Tracker tracker) {
-			String id = input.ask("Please enter the task's id: ");
-			tracker.delete(id);
+			if (tracker.getAll().length != 0) {
+				String id;
+				boolean correctId = false;
+				do {
+					id = input.ask("Please enter the task's id: ");
+					for (Item item : tracker.getAll()) {
+						if (id.equals(item.getId())) {
+							correctId = true;
+							break;
+						} else {
+							System.out.println("ID doesn't correct.");
+						}
+					}
+				} while (!correctId);
+				tracker.delete(id);
+			} else {
+				System.out.println("No items.");
+			}
 		}
 
 		public String info() {
@@ -137,10 +191,25 @@ public class MenuTracker {
 		}
 
 		public void execute(Input input, Tracker tracker) {
-			String id = input.ask("Please enter the task's id: ");
-			String comment = input.ask("Please enter the task's comment: ");
-			
-			tracker.addComment(id, new Comment(comment, new Date().getTime()));
+			if (tracker.getAll().length != 0) {
+				String id;
+				boolean correctId = false;
+				do {
+					id = input.ask("Please enter the task's id: ");
+					for (Item item : tracker.getAll()) {
+						if (id.equals(item.getId())) {
+							correctId = true;
+							break;
+						} else {
+							System.out.println("ID doesn't correct.");
+						}
+					}
+				} while (!correctId);
+				String comment = input.ask("Please enter the task's comment: ");
+				tracker.addComment(id, new Comment(comment, new Date().getTime()));
+			} else {
+				System.out.println("No items.");
+			}
 		}
 
 		public String info() {
