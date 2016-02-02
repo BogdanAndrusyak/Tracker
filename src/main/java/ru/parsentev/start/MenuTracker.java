@@ -20,7 +20,7 @@ class EditItem implements UserAction {
 						correctId = true;
 						break;
 					} else {
-						System.out.println("ID doesn't correct.");
+						throw new InputMismatchException("ID doesn't correct.");
 					}
 				}
 			} while (!correctId);
@@ -31,7 +31,7 @@ class EditItem implements UserAction {
 			task.setId(id);
 			tracker.edit(task);
 		} else {
-			System.out.println("No items.");
+			throw new NoItemsException("No items.");
 		}
 	}
 
@@ -65,7 +65,13 @@ public class MenuTracker {
 	}
 
 	public void select(int key) {
-		this.actions[key].execute(this.input, this.tracker);
+		try {
+			this.actions[key].execute(this.input, this.tracker);
+		} catch (NoItemsException nie) {
+			System.out.println("Please first add the item.");
+		} catch (InputMismatchException ime) {
+			System.out.println("Please enter the correct data.");
+		}
 	}
 
 	public void show() {
@@ -107,7 +113,7 @@ public class MenuTracker {
 					);
 				}
 			} else {
-				System.out.println("No items.");
+				throw new NoItemsException("No items.");
 			}
 		}
 
@@ -132,7 +138,7 @@ public class MenuTracker {
 							correctName = true;
 							break;
 						} else {
-							System.out.println("Name doesn't correct.");
+							throw new InputMismatchException("Name doesn't correct.");
 						}
 					}
 				} while (!correctName);
@@ -145,7 +151,7 @@ public class MenuTracker {
 					}
 				}
 			} else {
-				System.out.println("No items.");
+				throw new NoItemsException("No items.");
 			}
 		}
 
@@ -170,13 +176,13 @@ public class MenuTracker {
 							correctId = true;
 							break;
 						} else {
-							System.out.println("ID doesn't correct.");
+							throw new InputMismatchException("ID doesn't correct.");
 						}
 					}
 				} while (!correctId);
 				tracker.delete(id);
 			} else {
-				System.out.println("No items.");
+				throw new NoItemsException("No items.");
 			}
 		}
 
@@ -201,14 +207,14 @@ public class MenuTracker {
 							correctId = true;
 							break;
 						} else {
-							System.out.println("ID doesn't correct.");
+							throw new InputMismatchException("ID doesn't correct.");
 						}
 					}
 				} while (!correctId);
 				String comment = input.ask("Please enter the task's comment: ");
 				tracker.addComment(id, new Comment(comment, new Date().getTime()));
 			} else {
-				System.out.println("No items.");
+				throw new NoItemsException("No items.");
 			}
 		}
 
