@@ -65,18 +65,18 @@ public class MenuTracker {
 	}
 
 	public void select(int key) {
-		boolean succes;
+		boolean invalid = true;
 		do {
-			succes = true;
 			try {
 				this.actions[key].execute(this.input, this.tracker);
+				invalid = false;
 			} catch (NoItemsException nie) {
 				System.out.println("Please first add the item.");
+				invalid = false;
 			} catch (InputMismatchException ime) {
-				System.out.println("Please enter the correct data.");
-				succes = false;
+				System.out.println("Please enter the correct data.");	
 			}
-		} while(!succes);	
+		} while(invalid);	
 	}
 
 	public void show() {
