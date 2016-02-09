@@ -16,6 +16,36 @@ public class StartUI {
 		Tracker tracker = new Tracker();
 		MenuTracker menu = new MenuTracker(this.input, tracker);
 		menu.fillActions();
+		UserAction deleteAction = new BaseAction() {
+
+			// здесь нужно переопределить конструктор
+
+			public int key() {
+				return 5;
+			}
+
+			public void execute(Input input, Tracker tracker) {
+				if (tracker.getAll().length != 0) {
+				String id;
+				boolean correctId = false;
+				do {
+					id = input.ask("Please enter the task's id: ");
+					for (Item item : tracker.getAll()) {
+						if (id.equals(item.getId())) {
+							correctId = true;
+							break;
+						} else {
+							throw new InputMismatchException("ID doesn't correct.");
+						}
+					}
+				} while (!correctId);
+				tracker.delete(id);
+				} else {
+					throw new NoItemsException("No items.");
+				}
+			}
+		};
+		menu.addAction(deleteAction);
 		ranges = menu.getRanges();
 		do {
 			menu.show();

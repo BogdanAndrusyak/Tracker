@@ -3,7 +3,12 @@ package ru.parsentev.start;
 import ru.parsentev.models.*;
 import java.util.*;
 
-class EditItem implements UserAction {
+class EditItem extends BaseAction {
+
+	public EditItem(String name) {
+		super(name);
+	}
+
 	public int key() {
 		return 2;
 	}
@@ -34,16 +39,13 @@ class EditItem implements UserAction {
 			throw new NoItemsException("No items.");
 		}
 	}
-
-	public String info() {
-		return String.format("%s - %s", this.key(), "Edit the item.");
-	}
 }
 
 public class MenuTracker {
 	private Input input;
 	private Tracker tracker;
 	private UserAction[] actions = new UserAction[6];
+	private int position = 0;
 
 	public MenuTracker(Input input, Tracker tracker) {
 		this.input = input;
@@ -51,13 +53,16 @@ public class MenuTracker {
 	}
 
 	public void fillActions() { 
-		this.actions[0] = this.new AddItem();
-		this.actions[1] = new MenuTracker.ShowItems();
-		this.actions[2] = new EditItem();
-		this.actions[3] = new MenuTracker.FindByName();
-		this.actions[4] = new MenuTracker.DeleteItem();
-		this.actions[5] = new MenuTracker.AddComment();
+		this.actions[position++] = this.new AddItem("Add the new item.");
+		this.actions[position++] = new MenuTracker.ShowItems("Show all items.");
+		this.actions[position++] = new EditItem("Edit the item.");
+		this.actions[position++] = new MenuTracker.FindByName("Find item by name.");
+		this.actions[position++] = new MenuTracker.AddComment("Add comment.");
 	}
+
+	public void addAction(UserAction action) {
+		this.actions[position++] = action;
+	} 
 
 	public int[] getRanges() {
 		int[] ranges = new int[] {0, 1, 2, 3, 4, 5};
@@ -89,7 +94,12 @@ public class MenuTracker {
 		}
 	}
 
-	private class AddItem implements UserAction {
+	private class AddItem extends BaseAction {
+
+		public AddItem(String name) {
+			super(name);
+		}
+
 		public int key() {
 			return 0;
 		}
@@ -99,13 +109,14 @@ public class MenuTracker {
 			String desc = input.ask("Please enter the task's desc: ");
 			tracker.add(new Task(name, desc));
 		}
-
-		public String info() {
-			return String.format("%s - %s", this.key(), "Add the new item.");
-		}
 	}
 
-	private static class ShowItems implements UserAction {
+	private static class ShowItems extends BaseAction {
+
+		public ShowItems(String name) {
+			super(name);
+		}
+
 		public int key() {
 			return 1;
 		}
@@ -121,13 +132,14 @@ public class MenuTracker {
 				throw new NoItemsException("No items.");
 			}
 		}
-
-		public String info() {
-			return String.format("%s - %s", this.key(), "Show all items.");
-		}
 	}
 
-	private class FindByName implements UserAction {
+	private class FindByName extends BaseAction {
+
+		public FindByName(String name) {
+			super(name);
+		}
+
 		public int key() {
 			return 3;
 		}
@@ -159,44 +171,14 @@ public class MenuTracker {
 				throw new NoItemsException("No items.");
 			}
 		}
-
-		public String info() {
-			return String.format("%s - %s", this.key(), "Find item by name.");
-		}
 	}
 
-	private class DeleteItem implements UserAction {
-		public int key() {
-			return 4;
+	private class AddComment extends BaseAction {
+
+		public AddComment(String name) {
+			super(name);
 		}
 
-		public void execute(Input input, Tracker tracker) {
-			if (tracker.getAll().length != 0) {
-				String id;
-				boolean correctId = false;
-				do {
-					id = input.ask("Please enter the task's id: ");
-					for (Item item : tracker.getAll()) {
-						if (id.equals(item.getId())) {
-							correctId = true;
-							break;
-						} else {
-							throw new InputMismatchException("ID doesn't correct.");
-						}
-					}
-				} while (!correctId);
-				tracker.delete(id);
-			} else {
-				throw new NoItemsException("No items.");
-			}
-		}
-
-		public String info() {
-			return String.format("%s - %s", this.key(), "Delete item.");
-		}
-	}
-
-	private class AddComment implements UserAction {
 		public int key() {
 			return 5;
 		}
@@ -221,10 +203,6 @@ public class MenuTracker {
 			} else {
 				throw new NoItemsException("No items.");
 			}
-		}
-
-		public String info() {
-			return String.format("%s - %s", this.key(), "Add comment.");
 		}
 	}
 }
