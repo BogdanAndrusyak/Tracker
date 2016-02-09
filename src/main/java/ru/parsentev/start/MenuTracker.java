@@ -180,7 +180,7 @@ public class MenuTracker {
 		}
 
 		public int key() {
-			return 5;
+			return 4;
 		}
 
 		public void execute(Input input, Tracker tracker) {

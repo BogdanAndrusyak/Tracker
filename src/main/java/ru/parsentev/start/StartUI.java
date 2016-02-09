@@ -16,9 +16,7 @@ public class StartUI {
 		Tracker tracker = new Tracker();
 		MenuTracker menu = new MenuTracker(this.input, tracker);
 		menu.fillActions();
-		UserAction deleteAction = new BaseAction() {
-
-			// здесь нужно переопределить конструктор
+		UserAction deleteAction = new BaseAction("Delete item.") {
 
 			public int key() {
 				return 5;
