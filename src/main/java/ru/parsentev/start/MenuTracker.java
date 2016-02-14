@@ -5,8 +5,8 @@ import java.util.*;
 
 class EditItem extends BaseAction {
 
-	public EditItem(String name) {
-		super(name);
+	public EditItem() {
+		super("Edit the item.");
 	}
 
 	public int key() {
@@ -36,15 +36,15 @@ class EditItem extends BaseAction {
 			task.setId(id);
 			tracker.edit(task);
 		} else {
-			throw new NoItemsException("No items.");
+			throw new NoItemsException();
 		}
 	}
 }
 
 public class MenuTracker {
-	private Input input;
-	private Tracker tracker;
-	private UserAction[] actions = new UserAction[6];
+	private final Input input;
+	private final Tracker tracker;
+	private final UserAction[] actions = new UserAction[6];
 	private int position = 0;
 
 	public MenuTracker(Input input, Tracker tracker) {
@@ -53,11 +53,11 @@ public class MenuTracker {
 	}
 
 	public void fillActions() { 
-		this.actions[position++] = this.new AddItem("Add the new item.");
-		this.actions[position++] = new MenuTracker.ShowItems("Show all items.");
-		this.actions[position++] = new EditItem("Edit the item.");
-		this.actions[position++] = new MenuTracker.FindByName("Find item by name.");
-		this.actions[position++] = new MenuTracker.AddComment("Add comment.");
+		this.actions[position++] = this.new AddItem();
+		this.actions[position++] = new MenuTracker.ShowItems();
+		this.actions[position++] = new EditItem();
+		this.actions[position++] = new MenuTracker.FindByName();
+		this.actions[position++] = new MenuTracker.AddComment();
 	}
 
 	public void addAction(UserAction action) {
@@ -65,8 +65,7 @@ public class MenuTracker {
 	} 
 
 	public int[] getRanges() {
-		int[] ranges = new int[] {0, 1, 2, 3, 4, 5};
-		return ranges;
+		return new int[] {0, 1, 2, 3, 4, 5};
 	}
 
 	public void select(int key) {
@@ -96,8 +95,8 @@ public class MenuTracker {
 
 	private class AddItem extends BaseAction {
 
-		public AddItem(String name) {
-			super(name);
+		public AddItem() {
+			super("Add the new item.");
 		}
 
 		public int key() {
@@ -113,8 +112,8 @@ public class MenuTracker {
 
 	private static class ShowItems extends BaseAction {
 
-		public ShowItems(String name) {
-			super(name);
+		public ShowItems() {
+			super("Show all items.");
 		}
 
 		public int key() {
@@ -129,15 +128,15 @@ public class MenuTracker {
 					);
 				}
 			} else {
-				throw new NoItemsException("No items.");
+				throw new NoItemsException();
 			}
 		}
 	}
 
 	private class FindByName extends BaseAction {
 
-		public FindByName(String name) {
-			super(name);
+		public FindByName() {
+			super("Find item by name.");
 		}
 
 		public int key() {
@@ -168,15 +167,15 @@ public class MenuTracker {
 					}
 				}
 			} else {
-				throw new NoItemsException("No items.");
+				throw new NoItemsException();
 			}
 		}
 	}
 
 	private class AddComment extends BaseAction {
 
-		public AddComment(String name) {
-			super(name);
+		public AddComment() {
+			super("Add comment.");
 		}
 
 		public int key() {
@@ -201,7 +200,7 @@ public class MenuTracker {
 				String comment = input.ask("Please enter the task's comment: ");
 				tracker.addComment(id, new Comment(comment, new Date().getTime()));
 			} else {
-				throw new NoItemsException("No items.");
+				throw new NoItemsException();
 			}
 		}
 	}

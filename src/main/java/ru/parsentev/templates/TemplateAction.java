@@ -1,8 +1,8 @@
 package ru.parsentev.templates;
 
-public abstract class TemplateAction {
+abstract class TemplateAction {
 
-	public TemplateAction(String name) {
+	TemplateAction(String name) {
 	}
 
 	abstract void start();

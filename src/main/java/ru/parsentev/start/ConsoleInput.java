@@ -1,11 +1,10 @@
 package ru.parsentev.start;
 
-import ru.parsentev.models.*;
 import java.util.*;
 
 public class ConsoleInput implements Input {
 	
-	private Scanner scanner = new Scanner(System.in);	
+	private final Scanner scanner = new Scanner(System.in);
 
 	public String ask(String question) {
 		System.out.print(question);
@@ -24,7 +23,7 @@ public class ConsoleInput implements Input {
 		if(exist) {
 			return key;
 		} else {
-			throw new MenuOutException("Out of menu range.");
+			throw new MenuOutException();
 		}
 	}
 }

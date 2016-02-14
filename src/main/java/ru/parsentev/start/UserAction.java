@@ -1,6 +1,6 @@
 package ru.parsentev.start;
 
-public interface UserAction {
+interface UserAction {
 	
 	int key();
 

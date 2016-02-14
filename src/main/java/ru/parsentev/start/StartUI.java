@@ -1,11 +1,9 @@
 package ru.parsentev.start;
 
 import ru.parsentev.models.*;
-import java.util.*;
 
-public class StartUI {
-	private int[] ranges;
-	private Input input;
+class StartUI {
+	private final Input input;
 	private Tracker tracker = new Tracker();
 
 	public StartUI(Input input) {
@@ -39,15 +37,15 @@ public class StartUI {
 				} while (!correctId);
 				tracker.delete(id);
 				} else {
-					throw new NoItemsException("No items.");
+					throw new NoItemsException();
 				}
 			}
 		};
 		menu.addAction(deleteAction);
-		ranges = menu.getRanges();
+		int[] ranges = menu.getRanges();
 		do {
 			menu.show();
-			menu.select(input.ask("Select: ", this.ranges));
+			menu.select(input.ask("Select: ", ranges));
 		} while(!"y".equals(this.input.ask("Exit?(y): ")));
 	}
 

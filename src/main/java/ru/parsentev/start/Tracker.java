@@ -1,18 +1,16 @@
 package ru.parsentev.start;
 
 import ru.parsentev.models.*;
-import java.util.*;
 
-public class Tracker {
-	private Item[] items = new Item[10];
+class Tracker {
+	private final Item[] items = new Item[10];
 	private int position = 0;
 	private int idPosition = 100;
 	//private static final Random RN = new Random();
 
-	public Item add(Item item) {
+	public void add(Item item) {
 		item.setId(this.generateId());
 		this.items[position++] = item;
-		return item;
 	}
 
 	protected Item findById(String id) {
@@ -26,7 +24,7 @@ public class Tracker {
 		return result;
 	}
 
-	String generateId() {
+	private String generateId() {
 		//return String.valueOf(System.currentTimeMillis() + RN.nextInt());
 		return String.valueOf(idPosition++);
 	}

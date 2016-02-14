@@ -1,6 +1,6 @@
 package ru.parsentev.start;
 
-public class StartUITest {
+class StartUITest {
 
 	public static void main(String[] args) {
 		Input input = new StubInput(new String[] {"0", "create stub task", "desc stub task", 

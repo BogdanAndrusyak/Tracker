@@ -4,18 +4,18 @@ public class Item {
 	
 	private String id;
 
-	public String name;
+	String name;
 
-	public String description;
+	String description;
 
-	public long create;
+	private long create;
 
 	public String author;
 
-	public Comment[] comments = new Comment[10];
+	public final Comment[] comments = new Comment[10];
 	public int positionComment = 0;
 
-	public Item() {
+	Item() {
 
 	}
 

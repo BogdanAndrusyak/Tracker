@@ -1,7 +1,7 @@
 package ru.parsentev.start;
 
-public class NoItemsException extends RuntimeException {
-	public NoItemsException(String msg) {
-		super(msg);
+class NoItemsException extends RuntimeException {
+	public NoItemsException() {
+		super("No items.");
 	}
 }
