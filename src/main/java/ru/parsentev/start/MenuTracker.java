@@ -3,6 +3,9 @@ package ru.parsentev.start;
 import ru.parsentev.models.*;
 import java.util.*;
 
+/**
+ * Outer class. Edits an item.
+ */
 class EditItem extends BaseAction {
 
 	public EditItem() {
@@ -41,17 +44,33 @@ class EditItem extends BaseAction {
 	}
 }
 
+/**
+ * Contains all of the action.
+ * Responsible for the showing menu, and choose an action from the menu.
+ */
 public class MenuTracker {
 	private final Input input;
 	private final Tracker tracker;
+
+	/** The array of actions. */
 	private final UserAction[] actions = new UserAction[6];
+
+	/** Position when adding a new action. */
 	private int position = 0;
 
+	/**
+	 * Default constructor.
+	 * @param input Input system.
+	 * @param tracker Tracker.
+     */
 	public MenuTracker(Input input, Tracker tracker) {
 		this.input = input;
 		this.tracker = tracker;
 	}
 
+	/**
+	 * Filling array of actions.
+	 */
 	public void fillActions() { 
 		this.actions[position++] = this.new AddItem();
 		this.actions[position++] = new MenuTracker.ShowItems();
@@ -60,14 +79,26 @@ public class MenuTracker {
 		this.actions[position++] = new MenuTracker.AddComment();
 	}
 
+	/**
+	 * Add action to the array from outside.
+	 * @param action Action.
+     */
 	public void addAction(UserAction action) {
 		this.actions[position++] = action;
-	} 
+	}
 
+	/**
+	 * Return the range of the menu choices.
+	 * @return Range.
+     */
 	public int[] getRanges() {
 		return new int[] {0, 1, 2, 3, 4, 5};
 	}
 
+	/**
+	 * Execute the selected action by key from the menu.
+	 * @param key Key.
+     */
 	public void select(int key) {
 		boolean invalid = true;
 		do {
@@ -83,6 +114,9 @@ public class MenuTracker {
 		} while(invalid);	
 	}
 
+	/**
+	 * Print menu.
+	 */
 	public void show() {
 		System.out.println("\nMenu:");
 
@@ -93,6 +127,9 @@ public class MenuTracker {
 		}
 	}
 
+	/**
+	 * Non-Static inner class. Adds an item.
+	 */
 	private class AddItem extends BaseAction {
 
 		public AddItem() {
@@ -110,6 +147,9 @@ public class MenuTracker {
 		}
 	}
 
+	/**
+	 * Static inner class. Shows all the items.
+	 */
 	private static class ShowItems extends BaseAction {
 
 		public ShowItems() {
@@ -133,6 +173,9 @@ public class MenuTracker {
 		}
 	}
 
+	/**
+	 * Find item by name.
+	 */
 	private class FindByName extends BaseAction {
 
 		public FindByName() {
@@ -172,6 +215,9 @@ public class MenuTracker {
 		}
 	}
 
+	/**
+	 * Add new comment to item.
+	 */
 	private class AddComment extends BaseAction {
 
 		public AddComment() {
