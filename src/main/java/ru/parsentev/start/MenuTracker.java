@@ -53,7 +53,7 @@ public class MenuTracker {
 	private final Tracker tracker;
 
 	/** The array of actions. */
-	private final UserAction[] actions = new UserAction[6];
+	protected final UserAction[] actions;
 
 	/** Position when adding a new action. */
 	private int position = 0;
@@ -63,9 +63,10 @@ public class MenuTracker {
 	 * @param input Input system.
 	 * @param tracker Tracker.
      */
-	public MenuTracker(Input input, Tracker tracker) {
+	public MenuTracker(Input input, Tracker tracker, int size) {
 		this.input = input;
 		this.tracker = tracker;
+		this.actions = new UserAction[size];
 	}
 
 	/**
@@ -122,9 +123,13 @@ public class MenuTracker {
 
 		for (UserAction action : this.actions) {
 			if (action != null) {
-				System.out.println(action.info());
+				this.showItem(action);
 			}
 		}
+	}
+
+	public void showItem(UserAction action) {
+		System.out.println(action.info());
 	}
 
 	/**

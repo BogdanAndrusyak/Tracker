@@ -36,7 +36,7 @@ class StartUI {
 	public static void main(String[] args) {
 		Tracker tracker = new Tracker();
         Input input = new ValidateInput();
-		MenuTracker menu = new MenuTracker(input, tracker);
+		MenuTracker menu = new BeautyMenu(input, tracker, 6);
 		menu.fillActions();
 
 		/**
