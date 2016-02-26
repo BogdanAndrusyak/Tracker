@@ -1,0 +1,28 @@
+package ru.parsentev.templates;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.*;
+
+/**
+ * TODO: comment.
+ */
+public class TemplateTest {
+
+    @Test
+    public void whenTakeTextWithDataShouldReplaceParamsToData() {
+        // assign
+        Template template = new SimpleGenerator();
+        String text = "Hello, ${name}.";
+        String[] data = new String[] {"Petr"};
+        String checked = "Hello, Petr.";
+
+        // act
+        String result = template.generate(text, data);
+
+        // action
+        Assert.assertThat(result, is(checked));
+    }
+}
