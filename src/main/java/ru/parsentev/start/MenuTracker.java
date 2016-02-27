@@ -20,17 +20,16 @@ class EditItem extends BaseAction {
 		
 		if (tracker.getAll().length != 0) {
 			String id;
-			boolean correctId = false;
+			boolean correctId;
 			do {
 				id = input.ask("Please enter the task's id: ");
-				for (Item item : tracker.getAll()) {
-					if (id.equals(item.getId())) {
-						correctId = true;
-						break;
-					} else {
-						throw new InputMismatchException("ID doesn't correct.");
-					}
+
+				Item item = tracker.findById(id);
+				if (item == null) {
+					throw new InputMismatchException("ID doesn't correct.");
 				}
+
+				correctId = true;
 			} while (!correctId);
 
 			String name = input.ask("Please enter the new task's name: ");
@@ -193,27 +192,22 @@ public class MenuTracker {
 
 		public void execute(Input input, Tracker tracker) {
 			if (tracker.getAll().length != 0) {
+				Item item;
 				String name;
-				boolean correctName = false;
+				boolean correctName;
 				do {
 					name = input.ask("Please enter the task's name: ");
-					for (Item item : tracker.getAll()) {
-						if (name.equals(item.getName())) {
-							correctName = true;
-							break;
-						} else {
-							throw new InputMismatchException("Name doesn't correct.");
-						}
+					item = tracker.findByName(name);
+
+					if (item == null) {
+						throw new InputMismatchException("Name doesn't correct.");
 					}
+					correctName = true;
 				} while (!correctName);
 
-				for (Item item : tracker.getAll()) {
-					if (name.equals(item.getName())) {
-						System.out.println(
-							String.format("ID: %s, Name: %s", item.getId(), item.getName())
-						);
-					}
-				}
+				System.out.println(
+						String.format("ID: %s, Name: %s", item.getId(), item.getName())
+				);
 			} else {
 				throw new NoItemsException();
 			}
@@ -239,14 +233,12 @@ public class MenuTracker {
 				boolean correctId = false;
 				do {
 					id = input.ask("Please enter the task's id: ");
-					for (Item item : tracker.getAll()) {
-						if (id.equals(item.getId())) {
-							correctId = true;
-							break;
-						} else {
-							throw new InputMismatchException("ID doesn't correct.");
-						}
+					Item item = tracker.findById(id);
+					if(item == null) {
+						throw new InputMismatchException("ID doesn't correct.");
 					}
+
+					correctId = true;
 				} while (!correctId);
 				String comment = input.ask("Please enter the task's comment: ");
 				tracker.addComment(id, new Comment(comment, new Date().getTime()));

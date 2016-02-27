@@ -5,10 +5,10 @@ package ru.parsentev.templates;
  */
 public interface Template {
     /**
-     * Hello world, ${name}
+     * Hello world, ${name}.
      * @param template
      * @param data
      * @return
      */
-    String generate(String template, Object[] data);
+    String[] generate(String template, Object[] data);
 }
