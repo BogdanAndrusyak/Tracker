@@ -29,7 +29,7 @@ class StartUI {
 	public void init() {
 		do {
 			menu.show();
-			menu.select(input.ask("Select: ", ranges));
+			menu.select(input.ask("Select : ", ranges));
 		} while(!"y".equals(this.input.ask("Exit?(y): ")));
 	}
 

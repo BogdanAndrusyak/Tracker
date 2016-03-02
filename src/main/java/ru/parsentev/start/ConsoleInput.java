@@ -2,7 +2,7 @@ package ru.parsentev.start;
 
 import java.util.*;
 
-public class ConsoleInput implements Input {
+public class ConsoleInput implements Input, InputRange {
 	
 	private final Scanner scanner = new Scanner(System.in);
 
