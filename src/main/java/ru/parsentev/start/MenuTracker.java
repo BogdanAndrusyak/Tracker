@@ -72,11 +72,13 @@ public class MenuTracker {
 	 * Filling array of actions.
 	 */
 	public void fillActions() { 
-		this.actions[position++] = this.new AddItem();
-		this.actions[position++] = new MenuTracker.ShowItems();
+		this.actions[position++] = this.new AddTaskItem();
+		this.actions[position++] = this.new AddBugItem();
+
 		this.actions[position++] = new EditItem();
 		this.actions[position++] = new MenuTracker.FindByName();
 		this.actions[position++] = new MenuTracker.AddComment();
+		this.actions[position++] = new MenuTracker.ShowItems();
 	}
 
 	/**
@@ -92,7 +94,7 @@ public class MenuTracker {
 	 * @return Range.
      */
 	public int[] getRanges() {
-		return new int[] {0, 1, 2, 3, 4, 5};
+		return new int[] {0, 1, 2, 3, 4, 5, 6};
 	}
 
 	/**
@@ -131,13 +133,30 @@ public class MenuTracker {
 		System.out.println(action.info());
 	}
 
+	private class AddBugItem extends BaseAction {
+
+		public AddBugItem() {
+			super("Add the new bug.");
+		}
+
+		public int key() {
+			return 1;
+		}
+
+		public void execute(Input input, Tracker tracker) {
+			String name = input.ask("Please enter the task's name: ");
+			String desc = input.ask("Please enter the task's desc: ");
+			tracker.add(new Bug(name, desc, System.currentTimeMillis()));
+			}
+	}
+
 	/**
 	 * Non-Static inner class. Adds an item.
 	 */
-	private class AddItem extends BaseAction {
+	private class AddTaskItem extends BaseAction {
 
-		public AddItem() {
-			super("Add the new item.");
+		public AddTaskItem() {
+			super("Add the new task.");
 		}
 
 		public int key() {
@@ -148,6 +167,7 @@ public class MenuTracker {
 			String name = input.ask("Please enter the task's name: ");
 			String desc = input.ask("Please enter the task's desc: ");
 			tracker.add(new Task(name, desc));
+
 		}
 	}
 
@@ -161,15 +181,13 @@ public class MenuTracker {
 		}
 
 		public int key() {
-			return 1;
+			return 5;
 		}
 
 		public void execute(Input input, Tracker tracker) {
 			if(tracker.getAll().length != 0) {
 				for (Item item : tracker.getAll()) {
-					System.out.println(
-						String.format("ID: %s, Name: %s.", item.getId(), item.getName())
-					);
+					System.out.println(item);
 				}
 			} else {
 				throw new NoItemsException();

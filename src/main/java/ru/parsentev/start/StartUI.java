@@ -36,7 +36,7 @@ class StartUI {
 	public static void main(String[] args) {
 		Tracker tracker = new Tracker();
         Input input = new ValidateInput();
-		MenuTracker menu = new BeautyMenu(input, tracker, 6);
+		MenuTracker menu = new BeautyMenu(input, tracker, 7);
 		menu.fillActions();
 
 		/**
@@ -45,7 +45,7 @@ class StartUI {
 		UserAction deleteAction = new BaseAction("Delete item.") {
 
 			public int key() {
-				return 5;
+				return 6;
 			}
 
 			public void execute(Input input, Tracker tracker) {

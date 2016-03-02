@@ -7,6 +7,11 @@ public class Task extends Item{
 		this.description = desc;
 	}
 
+	@Override
+	public String toString() {
+		return "Task " + super.toString();
+	}
+
 	public String calculatePrice() {
 		return "100%";
 	}

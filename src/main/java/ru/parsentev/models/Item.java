@@ -1,5 +1,7 @@
 package ru.parsentev.models;
 
+import java.util.Arrays;
+
 public class Item {
 	
 	private String id;
@@ -14,6 +16,18 @@ public class Item {
 
 	public final Comment[] comments = new Comment[10];
 	public int positionComment = 0;
+
+	@Override
+	public String toString() {
+		return "Item{" +
+				"id='" + id + '\'' +
+				", name='" + name + '\'' +
+				", description='" + description + '\'' +
+				", create=" + create +
+				", author='" + author + '\'' +
+				", comments=" + Arrays.toString(comments) +
+				'}';
+	}
 
 	Item() {
 
