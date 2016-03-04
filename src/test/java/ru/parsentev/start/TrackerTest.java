@@ -27,34 +27,25 @@ public class TrackerTest {
     @Test
     public void whenAddNewItemsShouldBeSavedInTracker() {
         // assign
-        Item checked = new Task("name", "desc");
-        Item checked2 = new Task("namfe", "desc");
-        tracker.add(checked);
-        tracker.add(checked2);
-        boolean is = false;
+        String name = "name";
+        Item checked = new Task(name, "desc");
 
         // act
-        for (Item item : tracker.getAll()) {
-            is = item.equals(checked) ? true : false;
-        }
-        for (Item item : tracker.getAll()) {
-            is = item.equals(checked2) ? true : false;
-        }
+        tracker.add(checked);
 
         // action
-        assertTrue(is);
+        assertThat(tracker.findByName(name) != null, is(true));
     }
 
     @Test
     public void whenDeleteItemFromTracker() {
-        Item checked = new Task("name", "desc");
+        String name = "name";
+        Item checked = new Task(name, "desc");
         tracker.add(checked);
 
         tracker.delete(checked.getId());
 
-        for (Item item : tracker.getAll()) {
-            assertNull(item);
-        }
+        assertThat(tracker.findByName(name) == null, is(true));
     }
 
     @Test
