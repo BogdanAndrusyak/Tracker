@@ -36,7 +36,7 @@ public class IteratorArrayTest {
     }
 
     @Test
-    public void whenCheckNextPositionShouldReturnContantValue() {
+    public void whenCheckNextPositionShouldReturnContentValue() {
         IteratorArray it = new IteratorArray(new int[] {1});
 
         it.next();
