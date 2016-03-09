@@ -19,6 +19,9 @@ public class IteratorArrayEven implements Iterator {
 
         for (int i = index; i < values.length; i++) {
             has = values[i] % 2 == 0 ? true : false;
+            if(has) {
+                break;
+            }
         }
 
         return has;
