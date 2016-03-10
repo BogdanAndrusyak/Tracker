@@ -5,7 +5,8 @@ import java.lang.reflect.ParameterizedType;
 /**
  * TODO: comment.
  */
-public class SimpleList<T> {
+// abstract because type of instance can get only in header of subclass.
+public abstract class SimpleList<T> {
 
     Object[] objects;
     int index = 0;
@@ -20,6 +21,9 @@ public class SimpleList<T> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    protected SimpleList() {
     }
 
     public <K> K print(K value) {
