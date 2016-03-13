@@ -2,6 +2,10 @@ package ru.parsentev.services;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
@@ -22,6 +26,13 @@ public class SimpleListTest {
         String result = simple.get(0);
 
         assertThat(result,  is("test"));
+    }
+
+    public void showList() {
+        List<String> list = new ArrayList<>(100);
+        List<? super Integer> numbers = new LinkedList<>();
+        numbers.add(1);
+
     }
 
     /*public void wildTest() {
