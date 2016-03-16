@@ -2,9 +2,7 @@ package ru.parsentev.services;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -35,26 +33,17 @@ public class SimpleListTest {
 
     }
 
-    /*public void wildTest() {
-        SimpleList<? extends A> list = new SimpleList<>(10);
-        list.add(new A());
-        list.add(new B());
-        list.add(new C());
+    @Test
+    public void showSet() {
+        Set<String> set = new HashSet<>();
+        set.add("first");
+        set.add("second");
+        set.add("zero");
+        set.add("third");
+        System.out.println(set);
 
-        print(list);
-        printUpper(list);
-        printLower(list);
+        for(String value : set) {
+            System.out.println(value + " " + value.hashCode());
+        }
     }
-
-    public void print(SimpleList<?> list) {
-        //todo print
-    }
-
-    public void printUpper(SimpleList<? extends B> list) {
-
-    }
-
-    public void printLower(SimpleList<? super B> list) {
-
-    }*/
 }
