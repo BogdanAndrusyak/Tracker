@@ -25,6 +25,10 @@ public class MyArrayList<E> implements SimpleContainer<E> {
 
     }
 
+    public void set(int index, E element) {
+        this.elementData[index] = element;
+    }
+
     @Override
     public void add(E e) {
         elementData[size++] = e;

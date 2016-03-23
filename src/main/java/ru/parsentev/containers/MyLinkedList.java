@@ -15,7 +15,6 @@ public class MyLinkedList<E> implements SimpleContainer<E> {
     public MyLinkedList() {
     }
 
-
     @Override
     public void add(E e) {
         final Node<E> l = last;
@@ -26,6 +25,22 @@ public class MyLinkedList<E> implements SimpleContainer<E> {
         else
             l.next = newNode;
         size++;
+    }
+
+    public void set(int index, E element) {
+        Node<E> x;
+
+        if (index < (size >> 1)) {
+            x = first;
+            for (int i = 0; i < index; i++)
+                x = x.next;
+        } else {
+            x = last;
+            for (int i = size - 1; i > index; i--)
+                x = x.prev;
+        }
+
+        x.item = element;
     }
 
     @Override
