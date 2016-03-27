@@ -1,20 +1,39 @@
 package ru.parsentev.containers.MyTree;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * TODO: comment.
  */
 public class Leaf<E> {
-    private Entry<E> root;
+    private E value;
+    private Leaf<E> parent;
+    private List<Leaf<E>> children = new ArrayList<>();
 
-    public Leaf(Entry<E> root) {
-        this.root = root;
+    public Leaf(E value, Leaf<E> parent) {
+        this.value = value;
+        this.parent = parent;
     }
 
-    public Entry<E> getRoot() {
-        return this.root;
+    public void addToChildren(Leaf<E> leaf) {
+        children.add(leaf);
     }
 
-    public void setRoot(Entry<E> root) {
-        this.root = root;
+    public List<Leaf<E>> getChildren() {
+        return this.children;
+    }
+
+    public E getValue() {
+        return this.value;
+    }
+
+    public void setValue(E value) {
+        this.value = value;
+    }
+
+    public Leaf<E> getParent() {
+        return parent;
     }
 }
