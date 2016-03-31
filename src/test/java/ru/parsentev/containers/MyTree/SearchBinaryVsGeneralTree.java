@@ -7,7 +7,7 @@ import org.junit.Test;
  */
 public class SearchBinaryVsGeneralTree {
 
-    // ugly code, not in the object-oriented style. I understand (:
+    // not beauty code, not in the object-oriented style. I understand (:
     @Test
     public void test() {
         long timeout;
