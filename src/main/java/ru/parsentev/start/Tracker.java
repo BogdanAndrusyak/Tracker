@@ -2,6 +2,8 @@ package ru.parsentev.start;
 
 import ru.parsentev.models.*;
 
+import java.util.Calendar;
+
 /**
  * The class stores the items and processes them.
  */
@@ -109,7 +111,7 @@ class Tracker {
 	 * @param create Create date.
 	 * @return The desired item.
      */
-	public Item findByCreate(long create) {
+	public Item findByCreate(Calendar create) {
 		Item result = null;
 		for(Item item : items) {
 			if(item != null && item.getCreate() == create) {
@@ -128,7 +130,7 @@ class Tracker {
 	public void addComment(String id, Comment comment) {
 		for (int i = 0; i < items.length; i++) {
 			if (items[i] != null && id.equals(items[i].getId())) {
-				items[i].comments[items[i].positionComment++] = comment;
+				items[i].addComment(comment);
 			}
 		}
 	}

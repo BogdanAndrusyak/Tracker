@@ -146,7 +146,7 @@ public class MenuTracker {
 		public void execute(Input input, Tracker tracker) {
 			String name = input.ask("Please enter the task's name: ");
 			String desc = input.ask("Please enter the task's desc: ");
-			tracker.add(new Bug(name, desc, System.currentTimeMillis()));
+			tracker.add(new Bug(name, desc, Calendar.getInstance()));
 			}
 	}
 

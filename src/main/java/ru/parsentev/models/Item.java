@@ -1,21 +1,25 @@
 package ru.parsentev.models;
 
-import java.util.Arrays;
+import ru.parsentev.store.User;
+
+import java.util.Calendar;
+import java.util.List;
 
 public class Item {
 	
-	private String id;
+	String id;
 
 	String name;
 
 	String description;
 
-	private long create;
+	private Calendar createDate;
 
-	public String author;
+	public User author;
 
-	public final Comment[] comments = new Comment[10];
-	public int positionComment = 0;
+	public List<Comment> comments;
+
+	public List<File> files;
 
 	@Override
 	public String toString() {
@@ -23,9 +27,9 @@ public class Item {
 				"id='" + id + '\'' +
 				", name='" + name + '\'' +
 				", description='" + description + '\'' +
-				", create=" + create +
+				", create=" + createDate +
 				", author='" + author + '\'' +
-				", comments=" + Arrays.toString(comments) +
+				", comments=" + comments +
 				'}';
 	}
 
@@ -33,10 +37,10 @@ public class Item {
 
 	}
 
-	public Item(String name, String description, long create) {
+	public Item(String name, String description, Calendar createDate) {
 		this.name = name;
 		this.description = description;
-		this.create = create;
+		this.createDate = createDate;
 	}
 
 	public String getName() {
@@ -47,8 +51,8 @@ public class Item {
 		return this.description;
 	}
 
-	public long getCreate() {
-		return this.create;
+	public Calendar getCreate() {
+		return this.createDate;
 	}
 
 	public String getId() {
@@ -59,11 +63,10 @@ public class Item {
 		this.id = id;
 	}
 
-	public Comment[] getAllComments() {
-		Comment[] result = new Comment[positionComment];
-		for (int index=0; index!=positionComment; index++) {
-			result[index] = this.comments[index];
-		}
-		return result;
+	public void addComment(Comment comment) {
+		this.comments.add(comment);
+	}
+	public List<Comment> getAllComments() {
+		return this.comments;
 	}
 }

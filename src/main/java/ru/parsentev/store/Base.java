@@ -5,13 +5,13 @@ package ru.parsentev.store;
  */
 public abstract class Base {
 
-    protected String id;
+    protected int id;
 
-    public String getId() {
+    public int getId() {
         return this.id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 }
