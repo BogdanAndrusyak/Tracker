@@ -4,6 +4,7 @@ import ru.parsentev.store.Base;
 import ru.parsentev.store.Role;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -16,7 +17,16 @@ public class User extends Base {
     private String email;
     private Calendar createDate;
 
+    //todo id must be assigned in the base? how create user without id?
     public User(String name, String login, String email) {
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.createDate = new GregorianCalendar();
+    }
+
+    public User(int id, String name, String login, String email) {
+        this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;
@@ -58,5 +68,16 @@ public class User extends Base {
 
     public Calendar getCreateDate() {
         return createDate;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", login='" + login + '\'' +
+                ", email='" + email + '\'' +
+                ", createDate=" + createDate.getTime() +
+                '}';
     }
 }

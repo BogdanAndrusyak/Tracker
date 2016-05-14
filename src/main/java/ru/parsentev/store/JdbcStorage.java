@@ -22,6 +22,7 @@ public class JdbcStorage implements Storage{
     public JdbcStorage() {
         final Settings settings = Settings.getInstance();
         try {
+            Class.forName("org.postgresql.Driver");
             this.connection = DriverManager.getConnection(settings.value("jdbc.url"), settings.value("jdbc.username"), settings.value("jdbc.password"));
             this.checkDb();
         } catch (Exception e) {
@@ -59,8 +60,12 @@ public class JdbcStorage implements Storage{
     @Override
     public int addUser(User user) {
         try {
-            PreparedStatement statement = this.connection.prepareStatement("insert into users(name) values(?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = this.connection.prepareStatement("insert into users(name, login, email, create_date) values(?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getName());
+            statement.setString(2, user.getLogin());
+            statement.setString(3, user.getEmail());
+            statement.setTimestamp(4, new Timestamp(user.getCreateDate().getTime().getTime()));
+
             statement.executeUpdate();
 
             ResultSet generatedKeys = statement.getGeneratedKeys();
@@ -76,9 +81,11 @@ public class JdbcStorage implements Storage{
     @Override
     public void editUser(User user) {
         try {
-            PreparedStatement statement = this.connection.prepareStatement("update users set name = ? where id = ?");
+            PreparedStatement statement = this.connection.prepareStatement("update users set name = ?, login = ?, email = ? where id = ?");
             statement.setString(1, user.getName());
-            statement.setInt(2,user.getId());
+            statement.setString(2, user.getLogin());
+            statement.setString(3, user.getEmail());
+            statement.setInt(4,user.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             Log.error(e.getMessage(), e);

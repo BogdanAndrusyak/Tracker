@@ -1,5 +1,6 @@
 package ru.parsentev.servlets;
 
+import ru.parsentev.models.User;
 import ru.parsentev.store.UserCache;
 
 import javax.servlet.ServletException;
@@ -21,23 +22,25 @@ public class UsersServlet extends HttpServlet{
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         PrintWriter writer = new PrintWriter(resp.getOutputStream());
-        writer.append("hello");
-//        writer.append("Users: " + USER_CACHE.users());
+        writer.append("Users: " + USER_CACHE.users());
         writer.flush();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        USER_CACHE.addUser(new User(req.getParameter("name"), req.getParameter("login"), req.getParameter("email")));
+        doGet(req, resp);
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPut(req, resp);
+        USER_CACHE.editUser(new User(Integer.valueOf(req.getParameter("id")), req.getParameter("name"), req.getParameter("login"), req.getParameter("email")));
+        doGet(req, resp);
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
+        USER_CACHE.deleteUser(Integer.valueOf(req.getParameter("id")));
+        doGet(req, resp);
     }
 }
