@@ -12,7 +12,7 @@ import java.sql.*;
 import java.util.*;
 
 /**
- * TODO: comment.
+ * TODO: comment..
  * Created by Bogdan on 4/20/2016.
  */
 public class JdbcStorage implements Storage{
