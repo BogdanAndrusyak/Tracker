@@ -1,7 +1,5 @@
 package ru.parsentev.models;
 
-import ru.parsentev.store.User;
-
 import java.util.Calendar;
 import java.util.List;
 

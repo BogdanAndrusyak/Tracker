@@ -18,6 +18,9 @@ create table if not exists role_permission (
 create table if not exists users (
 	id serial primary key,
 	name text,
+	login text,
+	email text,
+	create_date timestamp not null default now(),
 	role_id int references roles(id)
 );
 

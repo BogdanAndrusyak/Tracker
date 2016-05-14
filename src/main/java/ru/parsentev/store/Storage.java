@@ -1,6 +1,7 @@
 package ru.parsentev.store;
 
 import ru.parsentev.models.Item;
+import ru.parsentev.models.User;
 
 import java.util.Collection;
 
@@ -18,11 +19,7 @@ public interface Storage {
 
     void deleteUser(final int id);
 
-    int addItem(final Item item);
-
-    void editItem(final Item item);
-
-    void deleteItem(final int id);
+    User get(final int id);
 
     void close();
 }
