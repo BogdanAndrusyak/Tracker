@@ -1,11 +1,41 @@
 <web-app>
     <servlet>
-        <servlet-name>UsersServlet</servlet-name>
-        <servlet-class>ru.parsentev.servlets.UsersServlet</servlet-class>
+        <servlet-name>UserViewServlet</servlet-name>
+        <servlet-class>ru.parsentev.servlets.UserViewServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>UsersServlet</servlet-name>
-        <url-pattern>/users</url-pattern>
+        <servlet-name>UserViewServlet</servlet-name>
+        <url-pattern>/user/view</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UserCreateServlet</servlet-name>
+        <servlet-class>ru.parsentev.servlets.UserCreateServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UserCreateServlet</servlet-name>
+        <url-pattern>/user/create</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UserEditServlet</servlet-name>
+        <servlet-class>ru.parsentev.servlets.UserEditServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UserEditServlet</servlet-name>
+        <url-pattern>/user/edit</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UserDeleteServlet</servlet-name>
+        <servlet-class>ru.parsentev.servlets.UserDeleteServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UserDeleteServlet</servlet-name>
+        <url-pattern>/user/delete</url-pattern>
     </servlet-mapping>
 </web-app>
