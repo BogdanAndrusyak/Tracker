@@ -3,6 +3,7 @@ package ru.parsentev.models;
 import ru.parsentev.store.Base;
 import ru.parsentev.store.Role;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -68,6 +69,10 @@ public class User extends Base {
 
     public Calendar getCreateDate() {
         return createDate;
+    }
+
+    public String getSimpleCreateDate() {
+        return new SimpleDateFormat("dd/M/yyyy hh:mm:ss").format(getCreateDate().getTime());
     }
 
     @Override

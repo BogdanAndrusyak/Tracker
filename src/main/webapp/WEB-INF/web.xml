@@ -6,7 +6,7 @@
 
     <servlet-mapping>
         <servlet-name>UserViewServlet</servlet-name>
-        <url-pattern>/user/view</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <servlet>

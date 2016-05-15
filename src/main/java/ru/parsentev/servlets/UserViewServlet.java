@@ -22,7 +22,7 @@ public class UserViewServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/");
-        dispatcher.forward(req, resp);
+        req.setAttribute("users", USER_CACHE.users());
+        req.getRequestDispatcher("/WEB-INF/views/user/ViewUser.jsp").forward(req, resp);
     }
 }

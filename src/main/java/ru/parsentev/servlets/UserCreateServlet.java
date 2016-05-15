@@ -20,9 +20,13 @@ public class UserCreateServlet extends HttpServlet {
     private static final UserCache USER_CACHE = UserCache.getInstance();
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/WEB-INF/views/user/CreateUser.jsp").forward(req, resp);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         USER_CACHE.addUser(new User(req.getParameter("name"), req.getParameter("login"), req.getParameter("email")));
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/");
-        dispatcher.forward(req, resp);
+        resp.sendRedirect(String.format("%s/", req.getContextPath()));
     }
 }

@@ -21,14 +21,13 @@ public class UserEditServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/views/user/EditUser.jsp");
-        dispatcher.forward(req, resp);
+        req.setAttribute("user", USER_CACHE.get(Integer.valueOf(req.getParameter("id"))));
+        req.getRequestDispatcher("/WEB-INF/views/user/EditUser.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         USER_CACHE.editUser(new User(Integer.valueOf(req.getParameter("id")), req.getParameter("name"), req.getParameter("login"), req.getParameter("email")));
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/");
-        dispatcher.forward(req, resp);
+        resp.sendRedirect(String.format("%s/", req.getContextPath()));
     }
 }
