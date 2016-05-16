@@ -5,13 +5,15 @@
     <title></title>
 </head>
 <body>
-    <a href="${pageContext.servletContext.contextPath}/">back</a>
-    <form action="${pageContext.servletContext.contextPath}/user/create" method="post">
-        Name: <input type="text" name="name"><br>
+    <c:if test="${error != ''}">
+        <div style="background-color: red;">
+            <c:out value="${error}"/>
+        </div>
+    </c:if>
+    <form action="${pageContext.servletContext.contextPath}/signin" method="post">
         Login: <input type="text" name="login"><br>
         Password: <input type="password" name="password"><br>
-        Email: <input type="text" name="email"><br>
-        <input type="submit" value="Create">
+        <input type="submit" value="Login">
     </form>
 </body>
 </html>

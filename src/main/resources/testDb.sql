@@ -1,3 +1,4 @@
+--tables
 create table if not exists roles (
 	id serial primary key,
 	name text
@@ -19,9 +20,10 @@ create table if not exists users (
 	id serial primary key,
 	name text,
 	login text,
+	password text,
 	email text,
 	create_date timestamp not null default now(),
-	role_id int references roles(id)
+	role_id int not null default 2 references roles(id)
 );
 
 create table if not exists items (
@@ -66,3 +68,23 @@ create table if not exists Category_Item (
 	category_id int references categories(id),
 	item_id int references items(id)
 );
+
+-- add roles
+insert into roles(name)
+select 'administrator'
+where not exists (select 1 from roles where name = 'administrator');
+
+insert into roles(name)
+select 'user'
+where not exists (select 1 from roles where name = 'user');
+
+-- add users, administrator
+do $$
+begin
+if not exists (select * from users where name = 'administrator' and role_id = 1)
+then
+insert into users(name, login, password, email, role_id) values('administrator', 'root', 'root', 'root@root.com', 1);
+end if;
+end;
+$$
+--

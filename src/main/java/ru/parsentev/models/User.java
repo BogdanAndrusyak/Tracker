@@ -1,11 +1,9 @@
 package ru.parsentev.models;
 
 import ru.parsentev.store.Base;
-import ru.parsentev.store.Role;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -15,30 +13,39 @@ public class User extends Base {
     private Role role;
     private String name;
     private String login;
+    private String password;
     private String email;
     private Calendar createDate;
 
     //todo id must be assigned in the base? how create user without id?
-    public User(String name, String login, String email) {
+    //for create user
+    public User(String name, String login, String password, String email) {
+        this.role = new Role(2, "user");
         this.name = name;
         this.login = login;
+        this.password = password;
         this.email = email;
         this.createDate = new GregorianCalendar();
     }
 
-    public User(int id, String name, String login, String email) {
+    // for edit user
+    public User(int id, Role role, String name, String login, String password, String email) {
         this.id = id;
+        this.role = role;
         this.name = name;
         this.login = login;
+        this.password = password;
         this.email = email;
         this.createDate = new GregorianCalendar();
     }
 
     // from base
-    public User(int id, String name, String login, String email, Calendar createDate) {
+    public User(int id, Role role, String name, String login, String password, String email, Calendar createDate) {
         this.id = id;
+        this.role = role;
         this.name = name;
         this.login = login;
+        this.password = password;
         this.email = email;
         this.createDate = createDate;
     }
@@ -59,6 +66,10 @@ public class User extends Base {
         return login;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -72,7 +83,7 @@ public class User extends Base {
     }
 
     public String getSimpleCreateDate() {
-        return new SimpleDateFormat("dd/M/yyyy hh:mm:ss").format(getCreateDate().getTime());
+        return new SimpleDateFormat("dd/M/yyyy hh:mm:ss a").format(getCreateDate().getTime());
     }
 
     @Override

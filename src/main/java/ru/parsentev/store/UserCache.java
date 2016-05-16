@@ -1,8 +1,10 @@
 package ru.parsentev.store;
 
+import ru.parsentev.models.Role;
 import ru.parsentev.models.User;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * TODO: comment.
@@ -39,6 +41,11 @@ public class UserCache implements Storage {
     }
 
     @Override
+    public List<Role> getRoles() {
+        return this.storage.getRoles();
+    }
+
+    @Override
     public User get(int id) {
         return this.storage.get(id);
     }
@@ -46,5 +53,27 @@ public class UserCache implements Storage {
     @Override
     public void close() {
         this.storage.close();
+    }
+
+    public boolean isCredential(String login, String password) {
+        boolean exists = false;
+        for (User user : this.storage.users()) {
+            if (login.equals(user.getLogin()) && password.equals(user.getPassword())) {
+                exists = true;
+                break;
+            }
+        }
+        return exists;
+    }
+
+    public User findByLogin(String login) {
+        User resultUser = null;
+        for (User user : this.storage.users()) {
+            if (login.equals(user.getLogin())) {
+                resultUser = user;
+                break;
+            }
+        }
+        return resultUser;
     }
 }

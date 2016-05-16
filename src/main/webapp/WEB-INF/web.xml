@@ -1,4 +1,44 @@
 <web-app>
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>ru.parsentev.servlets.AuthFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>PermissionFilter</filter-name>
+        <filter-class>ru.parsentev.servlets.PermissionFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>PermissionFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>SignoutController</servlet-name>
+        <servlet-class>ru.parsentev.servlets.SignoutController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SignoutController</servlet-name>
+        <url-pattern>/signout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SigninController</servlet-name>
+        <servlet-class>ru.parsentev.servlets.SigninController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SigninController</servlet-name>
+        <url-pattern>/signin</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>UserViewServlet</servlet-name>
         <servlet-class>ru.parsentev.servlets.UserViewServlet</servlet-class>

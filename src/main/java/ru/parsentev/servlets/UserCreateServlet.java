@@ -26,7 +26,7 @@ public class UserCreateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        USER_CACHE.addUser(new User(req.getParameter("name"), req.getParameter("login"), req.getParameter("email")));
+        USER_CACHE.addUser(new User(req.getParameter("name"), req.getParameter("login"), req.getParameter("password"), req.getParameter("email")));
         resp.sendRedirect(String.format("%s/", req.getContextPath()));
     }
 }
