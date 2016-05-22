@@ -1,0 +1,223 @@
+.clearfix:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+.clr{
+	clear:both;
+}
+
+body {
+	/*background-image: url(../images/bg.jpg);
+	background-repeat:  no-repeat;
+    background-size: cover;
+    background-position: center top;*/
+}
+.center-block-main {
+	max-width: 1170px;
+	margin: 0 auto;
+}
+nav {
+	width: 280px;
+	float: left;
+	background-color: #f7f7f7; 
+	border: 1px solid green;
+
+}
+	.logo {
+		text-align: center;
+		font-size: 2em;
+		font-family: Helvetica;
+		font-weight: bold;
+		line-height: 45px;
+		border-bottom: 1px solid green;
+	}
+	.user-toolbar {
+		padding-bottom: 25px;
+		font-size: 1.2em;
+		line-height: 33px;
+		padding-top: 10px;
+	}
+		.user-toolbar img {
+			width: 10%;
+			vertical-align: middle;
+			float: left;
+			padding-left: 10px;
+		}
+		.user-toolbar span {
+			float: left;
+			padding-left: 10px;
+		}
+		.user-toolbar a {
+			float: right;
+			padding-right: 10px;
+			text-decoration: none; 
+		}
+	.lists {
+
+	}
+		.lists h2 {
+			margin-top: 20px;
+			margin-bottom: 10px;
+			text-align: center;
+			border-top: 1px solid black;
+			border-bottom: 1px solid black;
+			font-weight: normal;
+			background-color: #daf8bc;
+		}
+		.lists a {
+			text-decoration: none;
+			color: black;
+			padding: 10px auto;
+			display: inline-block;
+		}
+		.lists .list-icon img{
+			width: 9%;
+			vertical-align: middle;
+			padding-left: 10px;
+			padding-bottom: 7px;
+			
+		}
+		.lists .label {
+			padding-left: 20px;
+			font-size: 1.2em;
+			line-height: 42px;
+		}
+		.lists ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		.lists .list-count {
+			float: right;
+			padding-right: 15px;
+			font-size: 1.1em;
+			line-height: 40px;
+		}
+	.tasks {
+		padding-left: 20px;
+		overflow: hidden;
+	}
+		.list-toolbar {
+		    background: #daf8bc;
+		    line-height: 45px;
+		    display: inline-block;
+		    margin-bottom: 10px; 
+		    width: 99%;
+		    border: 1px solid green;
+		}
+			.tasks h1 {
+				margin: 0;
+				margin-left: 10px;
+				font-weight: normal;
+				line-height: 45px;
+				
+				float: left;
+			}
+			.tasks .list-toolbar a {
+				
+			}
+			.tasks .list-toolbar img {
+				height: 35px;
+				float: right;
+				display: inline-block;
+				margin-top: 5px; 
+				margin-right: 10px; 
+			}
+		.tasks-scroll {
+
+		}
+			.tasks-scroll .addTask {
+			    background: rgba(102,137,100,0.75);
+		        border-radius: 3px;
+	            padding: 0 12px;
+	            position: relative;
+	            width: 96.6%;
+			}
+				.tasks-scroll .addTask input[type="text"] {
+					border: none;
+				    background: none;
+			        line-height: 20px;
+    				padding: 13px 60px 14px 0;
+    				font-size: 1em;
+    				width: 85%;
+				}
+				.tasks-scroll .addTask input:focus[type="text"] {
+					outline: none;
+				}
+				::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    				color: white;
+				}
+				:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+				   color: white;
+				   opacity: 1;
+				}
+				::-moz-placeholder { /* Mozilla Firefox 19+ */
+				   color: white;
+				   opacity: 1;
+				}
+				:-ms-input-placeholder { /* Internet Explorer 10-11 */
+				   color: white;
+				}
+				.tasks-scroll .addTask input[type="image"] {
+					width: 20px;
+					position: absolute;
+					top: 13px;
+					right: 70px;
+				}
+				.tasks-scroll .addTask img {
+					width: 20px;
+					position: absolute;
+					top: 13px;
+					right: 25px;
+				}
+			.tasks-list {
+
+			}
+				.tasks-list h2 {
+					margin-top: 20px;
+					margin-bottom: 10px;  
+					font-size: 1em;
+					background: rgba(102,137,100,0.75);
+					width: 70px;
+					text-align: center;
+					font-weight: normal;
+					color: white;
+					border-radius: 2px;
+					text-transform: uppercase;
+				}
+				.tasks-list ul {
+					list-style: none;
+					margin: 0;
+					padding: 0;
+				}
+				.tasks-list li {
+					background-color: white;
+					color: black;
+					border: 1px solid rgba(102,137,100,0.75);
+					margin-bottom: 5px; 
+					border-radius: 5px;
+					height: 40px;
+					line-height: 35px;
+					font-size: 1em;
+				}
+					.tasks-list li .check-box {
+						float: left;
+						margin-left: 10px;
+					}
+					.tasks-list li img {
+						width: 20px;
+						vertical-align: middle;
+						margin-bottom: 3px;
+					}
+					.tasks-list li span {
+						float: left;
+						margin-left: 10px; 
+					}
+					.tasks-list li .edit-item {
+						float: right;
+						margin-right: 10px;
+						text-decoration: none;
+						color: #963d97;
+					}
+

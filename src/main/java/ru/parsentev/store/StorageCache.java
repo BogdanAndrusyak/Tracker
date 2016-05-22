@@ -1,5 +1,6 @@
 package ru.parsentev.store;
 
+import ru.parsentev.models.Item;
 import ru.parsentev.models.Role;
 import ru.parsentev.models.User;
 
@@ -10,13 +11,13 @@ import java.util.List;
  * TODO: comment.
  * Created by Bogdan on 5/14/2016.
  */
-public class UserCache implements Storage {
+public class StorageCache implements Storage {
 
-    private static final UserCache INSTANCE = new UserCache();
+    private static final StorageCache INSTANCE = new StorageCache();
 
     private Storage storage = new JdbcStorage();
 
-    public static UserCache getInstance() {
+    public static StorageCache getInstance() {
         return INSTANCE;
     }
 
@@ -48,6 +49,11 @@ public class UserCache implements Storage {
     @Override
     public User get(int id) {
         return this.storage.get(id);
+    }
+
+    @Override
+    public int addItem(Item item) {
+        return this.storage.addItem(item);
     }
 
     @Override

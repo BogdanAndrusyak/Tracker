@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title></title>
+    <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}css/style.css">
+    <title>Login: Tracker</title>
 </head>
 <body>
     <c:if test="${error != ''}">
@@ -10,10 +11,24 @@
             <c:out value="${error}"/>
         </div>
     </c:if>
-    <form action="${pageContext.servletContext.contextPath}/signin" method="post">
-        Login: <input type="text" name="login"><br>
-        Password: <input type="password" name="password"><br>
-        <input type="submit" value="Login">
-    </form>
+    <div class="logo">
+        <div><span style="color:#61bb46;">T</span><span style="color:#fdb827;">r</span><span style="color:#f5821f;">a</span><span style="color:#eb5e2f;">c</span><span style="color:#e03a3e;">k</span><span style="color:#963d97;">e</span><span style="color:#009ddc;">r</span></div>
+    </div>
+    <div class="card-auth">
+        <form class="auth-form" action="${pageContext.servletContext.contextPath}/signin" method="post">
+            <div class="row row-login">
+                <span class="icon icon-login"><img src="images/icon-login.png"></span>
+                <input type="text" name="login" placeholder="Login"><br>
+            </div>
+            <div class="row row-password">
+                <span class="icon icon-password"><img src="images/icon-password.png"></span>
+                <input type="password" name="password" placeholder="Password"><br>
+            </div>
+            <div class="row row-submit">
+                <input type="submit" value="Login"><br>
+            </div>
+        </form>
+        <span class="create-user"><a href="/create">Create new User?</a></span>
+    </div>
 </body>
 </html>

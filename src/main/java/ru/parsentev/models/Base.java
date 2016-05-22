@@ -1,4 +1,4 @@
-package ru.parsentev.store;
+package ru.parsentev.models;
 
 /**
  * TODO: comment.
