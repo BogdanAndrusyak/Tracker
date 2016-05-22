@@ -50,12 +50,12 @@ class StartUI {
 
 			public void execute(Input input, Tracker tracker) {
 				if (tracker.getAll().length != 0) {
-					String id;
+					int id;
 					boolean correctId = false;
 					do {
-						id = input.ask("Please enter the task's id: ");
+						id = Integer.valueOf(input.ask("Please enter the task's id: "));
 						for (Item item : tracker.getAll()) {
-							if (id.equals(item.getId())) {
+							if (id == item.getId()) {
 								correctId = true;
 								break;
 							} else {

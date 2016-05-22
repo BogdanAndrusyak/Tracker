@@ -1,44 +1,39 @@
 package ru.parsentev.models;
 
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.GregorianCalendar;
 import java.util.List;
 
-public class Item {
-	
-	String id;
+public class Item extends Base {
 
-	String name;
-
-	String description;
-
-	private Calendar createDate;
-
-	public User author;
-
-	public List<Comment> comments;
-
-	public List<File> files;
-
-	@Override
-	public String toString() {
-		return "Item{" +
-				"id='" + id + '\'' +
-				", name='" + name + '\'' +
-				", description='" + description + '\'' +
-				", create=" + createDate +
-				", author='" + author + '\'' +
-				", comments=" + comments +
-				'}';
-	}
+	protected String name;
+	protected String description;
+	protected Calendar createDate;
+	protected int authorId;
+	protected Collection<Comment> comments;
+	protected Collection<File> files;
 
 	Item() {
 
 	}
 
-	public Item(String name, String description, Calendar createDate) {
+	// for add from view
+	public Item(String name, int authorId) {
+		this.name = name;
+		this.authorId = authorId;
+		this.createDate = new GregorianCalendar();
+	}
+
+	// for add from base
+	public Item(int id, String name, String description, Calendar createDate, int authorId, Collection<Comment> comments, Collection<File> files) {
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.createDate = createDate;
+		this.authorId = authorId;
+		this.comments = comments;
+		this.files = files;
 	}
 
 	public String getName() {
@@ -49,22 +44,19 @@ public class Item {
 		return this.description;
 	}
 
-	public Calendar getCreate() {
+	public Calendar getCreateDate() {
 		return this.createDate;
 	}
 
-	public String getId() {
-		return this.id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
+	public int getAuthorId() {
+		return authorId;
 	}
 
 	public void addComment(Comment comment) {
 		this.comments.add(comment);
 	}
-	public List<Comment> getAllComments() {
+
+	public Collection<Comment> getAllComments() {
 		return this.comments;
 	}
 }

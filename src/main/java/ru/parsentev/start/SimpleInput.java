@@ -5,7 +5,7 @@ package ru.parsentev.start;
  */
 public interface SimpleInput {
     /**
-     * Ask question the user and get an answer.
+     * Ask question the user and getUserById an answer.
      * @param question Question.
      * @return Answer.
      */

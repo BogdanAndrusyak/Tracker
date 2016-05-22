@@ -1,8 +1,6 @@
 package ru.parsentev.store;
 
-import ru.parsentev.models.Item;
-import ru.parsentev.models.Role;
-import ru.parsentev.models.User;
+import ru.parsentev.models.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -21,9 +19,21 @@ public interface Storage {
 
     void deleteUser(final int id);
 
-    User get(final int id);
+    User getUserById(final int id);
 
     List<Role> getRoles();
+
+    Collection<Item> getAllItems();
+
+    Collection<Item> getItemsByUserId(int userId);
+//
+//    Collection<Comment> getCommentsByItemId(int id);
+//
+//    Collection<File> getFilesByItemId(int id);
+
+    int addItem(Item item);
+
+    void deleteItem(int id);
 
     void close();
 }

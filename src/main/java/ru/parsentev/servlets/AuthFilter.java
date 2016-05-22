@@ -18,8 +18,15 @@ public class AuthFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
+        //check if uri contains link to a file resource, bypass security filter
+        String uri = ((HttpServletRequest) req).getRequestURI();
+        if (uri.contains("resources/")) {
+            chain.doFilter(req, resp);
+            return;
+        }
+
         HttpServletRequest request = (HttpServletRequest) req;
-        if (request.getRequestURI().contains("/signin")){
+        if (uri.contains("/signin") || uri.contains("/user/create")){
             chain.doFilter(req, resp);
         } else {
             HttpSession session = request.getSession();

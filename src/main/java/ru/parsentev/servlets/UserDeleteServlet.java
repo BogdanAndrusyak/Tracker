@@ -1,8 +1,7 @@
 package ru.parsentev.servlets;
 
-import ru.parsentev.store.UserCache;
+import ru.parsentev.store.StorageCache;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,11 +14,11 @@ import java.io.IOException;
  */
 public class UserDeleteServlet extends HttpServlet {
 
-    private static final UserCache USER_CACHE = UserCache.getInstance();
+    private static final StorageCache USER_CACHE = StorageCache.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         USER_CACHE.deleteUser(Integer.valueOf(req.getParameter("id")));
-        resp.sendRedirect(String.format("%s/", req.getContextPath()));
+        resp.sendRedirect(String.format("%s/user/view", req.getContextPath()));
     }
 }

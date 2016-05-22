@@ -1,12 +1,19 @@
 package ru.parsentev.models;
 
-public class Comment {
+import java.util.Calendar;
 
-	private final String desc;
-	private final long createDate;
+public class Comment extends Base {
 
-	public Comment(String desc, long createDate) {
-		this.desc = desc;
+	private final String description;
+	private final Calendar createDate;
+
+	public Comment(String description, Calendar createDate) {
+		this.description = description;
+		this.createDate = createDate;
+	}
+	public Comment(int id, String description, Calendar createDate) {
+		this.id = id;
+		this.description = description;
 		this.createDate = createDate;
 	}
 }

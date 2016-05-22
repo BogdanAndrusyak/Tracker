@@ -3,12 +3,12 @@
 	margin: 0 auto;
 }
 .input-form {
-	width: 45%;
+	max-width: 540px;
 	margin: 0 auto;
 }
 .title {
 	font-size: 1.5em;
-	margin-top: 20px;
+	margin-top: 10px;
 	margin-bottom: 20px;
 	padding-bottom: 10px;
 	border-bottom: 1px solid #dddddd; 
@@ -17,6 +17,7 @@
 }
 .col {
 	font-size: 1.1em;
+	overflow: hidden;
 }
 	.col .col-text {
 		float: left;
@@ -27,8 +28,13 @@
 	.col .col-input input {
 		border-radius: 4px;
 		border: 1px solid green;
-		height: 20px;
+		height: 27px;
 		width: 77%;
+	}
+	.col .col-input select {
+		border-radius: 4px;
+		border: 1px solid green;
+		height: 27px;
 	}
 	.col input[type="submit"]{
 	height: 30px;
@@ -38,8 +44,8 @@
 	width: 20%;
 
 	border: none;
-	-webkit-border-radius: 4;
-	-moz-border-radius: 4;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 	border-radius: 4px;
 	font-family: Arial;
 	color: #ffffff;
@@ -56,6 +62,29 @@
 		float: right;
 		text-decoration: none; 
 		color: blue;
+	}
+	.col .show-password span{
+		text-align: center;
+		float: right;
+		margin-top: 5px;
+		margin-right: 4px;
+		-webkit-border-radius: 2px;
+		-moz-border-radius: 2px;
+		border-radius: 2px;
+		color: #000;
+		border: solid #1f628d 1px;
+		text-decoration: none;
+		background: none;
+		width: 15%;
+	}
+	.col .show-password span:hover{
+		background: #3cfaf0;
+		cursor: pointer;
+	}
+	.input-buttons {
+		border-top: 1px solid #dddddd;
+		padding-top: 20px;
+		margin-top: 5px;
 	}
 	.input-buttons a:hover {
 		color: red;

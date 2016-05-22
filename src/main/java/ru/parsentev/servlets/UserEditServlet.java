@@ -2,15 +2,14 @@ package ru.parsentev.servlets;
 
 import ru.parsentev.models.Role;
 import ru.parsentev.models.User;
-import ru.parsentev.store.UserCache;
+import ru.parsentev.store.StorageCache;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * TODO: comment.
@@ -18,11 +17,17 @@ import java.io.PrintWriter;
  */
 public class UserEditServlet extends HttpServlet {
 
-    private static final UserCache USER_CACHE = UserCache.getInstance();
+    private static final StorageCache USER_CACHE = StorageCache.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("user", USER_CACHE.get(Integer.valueOf(req.getParameter("id"))));
+        HttpSession session = req.getSession();
+//        synchronized (session) {
+//            if (((Integer)session.getAttribute("roleId")) != 1) {
+//
+//            }
+//        }
+        req.setAttribute("user", USER_CACHE.getUserById(Integer.valueOf(req.getParameter("id"))));
         req.setAttribute("roles", USER_CACHE.getRoles());
         req.getRequestDispatcher("/WEB-INF/views/user/EditUser.jsp").forward(req, resp);
     }
@@ -31,6 +36,6 @@ public class UserEditServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         USER_CACHE.editUser(new User(Integer.valueOf(req.getParameter("id")), new Role(Integer.valueOf(req.getParameter("role-id"))),
                 req.getParameter("name"), req.getParameter("login"), req.getParameter("password"), req.getParameter("email")));
-        resp.sendRedirect(String.format("%s/", req.getContextPath()));
+        resp.sendRedirect(String.format("%s/user/view", req.getContextPath()));
     }
 }

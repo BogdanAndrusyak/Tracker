@@ -10,6 +10,7 @@ import java.io.IOException;
  * TODO: comment.
  * Created by Bogdan on 5/16/2016.
  */
+// todo delete? - this does not use
 public class PermissionFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -19,7 +20,7 @@ public class PermissionFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
-        if (request.getRequestURI().equals(String.format("%s/", request.getContextPath()))) { // page only for administrator
+        if (request.getRequestURI().equals(String.format("%s/user/view", request.getContextPath()))) { // page only for administrator
             HttpSession session = request.getSession();
             synchronized (session) {
                 if (session.getAttribute("roleId") != null && Integer.valueOf((Integer) session.getAttribute("roleId")) != 1) {

@@ -19,10 +19,10 @@ class EditItem extends BaseAction {
 	public void execute(Input input, Tracker tracker) {
 		
 		if (tracker.getAll().length != 0) {
-			String id;
+			int id;
 			boolean correctId;
 			do {
-				id = input.ask("Please enter the task's id: ");
+				id = Integer.valueOf(input.ask("Please enter the task's id: "));
 
 				Item item = tracker.findById(id);
 				if (item == null) {
@@ -172,12 +172,12 @@ public class MenuTracker {
 	}
 
 	/**
-	 * Static inner class. Shows all the items.
+	 * Static inner class. Shows all the getAllItems.
 	 */
 	private static class ShowItems extends BaseAction {
 
 		public ShowItems() {
-			super("Show all items.");
+			super("Show all getAllItems.");
 		}
 
 		public int key() {
@@ -247,10 +247,10 @@ public class MenuTracker {
 
 		public void execute(Input input, Tracker tracker) {
 			if (tracker.getAll().length != 0) {
-				String id;
+				int id;
 				boolean correctId = false;
 				do {
-					id = input.ask("Please enter the task's id: ");
+					id = Integer.valueOf(input.ask("Please enter the task's id: "));
 					Item item = tracker.findById(id);
 					if(item == null) {
 						throw new InputMismatchException("ID doesn't correct.");
@@ -259,7 +259,7 @@ public class MenuTracker {
 					correctId = true;
 				} while (!correctId);
 				String comment = input.ask("Please enter the task's comment: ");
-				tracker.addComment(id, new Comment(comment, new Date().getTime()));
+				tracker.addComment(id, new Comment(comment, new GregorianCalendar()));
 			} else {
 				throw new NoItemsException();
 			}

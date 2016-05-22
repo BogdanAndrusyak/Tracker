@@ -31,20 +31,20 @@ create table if not exists items (
 	name text,
 	description text,
 	create_date timestamp not null default now(),
-	user_id int references users(id)
+	user_id int not null references users(id)
 );
 
 create table if not exists comments (
 	id serial primary key,
 	description text,
 	create_date timestamp not null default now(),
-	item_id int references items(id)
+	item_id int not null references items(id)
 );
 
 create table if not exists files (
 	id serial primary key,
 	file bytea,
-	item_id int references items(id)
+	item_id int not null references items(id)
 );
 
 create table if not exists statuses (
@@ -55,7 +55,7 @@ create table if not exists statuses (
 create table if not exists Status_Item (
 	id serial primary key,
 	status_id int references statuses(id),
-	item_id int references items(id)
+	item_id int not null references items(id)
 );
 
 create table if not exists categories (
@@ -66,7 +66,7 @@ create table if not exists categories (
 create table if not exists Category_Item (
 	id serial primary key,
 	category_id int references categories(id),
-	item_id int references items(id)
+	item_id int not null references items(id)
 );
 
 -- add roles
@@ -81,9 +81,9 @@ where not exists (select 1 from roles where name = 'user');
 -- add users, administrator
 do $$
 begin
-if not exists (select * from users where name = 'administrator' and role_id = 1)
+if not exists (select * from users where name = 'admin' and role_id = 1)
 then
-insert into users(name, login, password, email, role_id) values('administrator', 'root', 'root', 'root@root.com', 1);
+insert into users(name, login, password, email, role_id) values('admin', 'root', 'root', 'root@root.com', 1);
 end if;
 end;
 $$

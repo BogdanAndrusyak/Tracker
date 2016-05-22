@@ -58,7 +58,7 @@ public class TrackerTest {
 
     @Test
     public void whenFindByWrongIdResultShouldBeNull() {
-        String wrongId = "1000000";
+        int wrongId = 1000000;
 
         assertNull(tracker.findById(wrongId));
     }
@@ -87,7 +87,7 @@ public class TrackerTest {
         Item item1 = new Task("name1", "desc");
         Item item2 = new Task("name2", "desc");
         tracker.add(item1);
-        String checkedId = item1.getId();
+        int checkedId = item1.getId();
         item2.setId(checkedId);
 
         tracker.edit(item2);
@@ -100,7 +100,7 @@ public class TrackerTest {
         Item item1 = new Task("name1", "desc");
         Item item2 = new Task("name2", "desc");
         tracker.add(item1);
-        String wrongId = "10000002";
+        int wrongId = 10000002;
         item2.setId(wrongId);
 
         tracker.edit(item2);

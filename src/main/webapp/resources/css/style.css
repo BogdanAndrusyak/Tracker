@@ -1,5 +1,18 @@
 body {
-	background-color: #fafafa; 
+	background-color: #fafafa;
+}
+.error {
+	width: 50%;
+	background-color: #cd362d;
+	margin: 0 auto;
+	text-align: center;
+	max-height: 50px;
+	font-size: 1.7em;
+	line-height: 47px;
+	color: white;
+	border: 1px solid yellow;
+	border-radius: 4px;
+	box-shadow: 0 1px 3px rgba(50,50,50,0.08);
 }
 .logo {
 	text-align: center;
@@ -16,8 +29,8 @@ body {
 }
 .card-auth .icon {
 	width: 7%;
-    display: inline-block;
-    margin: 0 7px 0 14px;
+	display: inline-block;
+	margin: 0 7px 0 14px;
 
 }
 .card-auth .icon img{
@@ -26,7 +39,6 @@ body {
 	padding-bottom: 12px;
 }
 .auth-form {
-	height: 100%;
 	margin: 0 auto;
 	background-color: #fff;
 	border: 1px solid #ddd;
@@ -45,11 +57,11 @@ body {
 	color: #666;
 }
 .row input:focus {
-	    outline: none;
+	outline: none;
 }
 .row-submit {
 	padding: 0 15px;
-	border-bottom: none; 
+	border-bottom: none;
 	margin-bottom: 8px;
 }
 .row-submit input{
@@ -61,19 +73,19 @@ body {
 	margin: 18px auto;
 	border: none;
 	-webkit-border-radius: 4;
-  -moz-border-radius: 4;
-	  border-radius: 4px;
-	  font-family: Arial;
-	  color: #ffffff;
-	  font-size: 20px;
-	  padding: 10px 20px 10px 20px;
+	-moz-border-radius: 4;
+	border-radius: 4px;
+	font-family: Arial;
+	color: #ffffff;
+	font-size: 20px;
+	padding: 10px 20px 10px 20px;
 
-	  background: #61bb46;
+	background: #61bb46;
 
 }
 .row-submit input:hover{
 	background: #77ca72;
-  	cursor: pointer;
+	cursor: pointer;
 }
 .card-auth .create-user {
 	display: block;
@@ -81,9 +93,9 @@ body {
 	text-align: center;
 }
 .card-auth .create-user a {
-	text-decoration: none; 
+	text-decoration: none;
 	font-size: 1.1em;
 }
 .card-auth .create-user a:hover {
-	text-decoration: underline; 
+	text-decoration: underline;
 }

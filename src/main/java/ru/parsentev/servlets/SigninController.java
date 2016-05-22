@@ -1,6 +1,6 @@
 package ru.parsentev.servlets;
 
-import ru.parsentev.store.UserCache;
+import ru.parsentev.store.StorageCache;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +15,7 @@ import java.io.IOException;
  */
 public class SigninController extends HttpServlet{
 
-    private static final UserCache USER_CACHE = UserCache.getInstance();
+    private static final StorageCache USER_CACHE = StorageCache.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,9 +31,9 @@ public class SigninController extends HttpServlet{
             HttpSession session = req.getSession();
             synchronized (session) {
                 session.setAttribute("login", login);
-                session.setAttribute("roleId", USER_CACHE.findByLogin(login).getRole().getId());
+                session.setAttribute("roleId", USER_CACHE.findByLogin(login).getRole().getId()); //todo can does not using, only user variable
             }
-            resp.sendRedirect(String.format("%s/", req.getContextPath()));
+            resp.sendRedirect(String.format("%s/user/view", req.getContextPath()));
         } else {
             req.setAttribute("error", "Credential invalid");
             doGet(req, resp);

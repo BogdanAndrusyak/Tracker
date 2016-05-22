@@ -1,15 +1,13 @@
 package ru.parsentev.servlets;
 
 import ru.parsentev.models.User;
-import ru.parsentev.store.UserCache;
+import ru.parsentev.store.StorageCache;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * TODO: comment.
@@ -17,7 +15,7 @@ import java.io.PrintWriter;
  */
 public class UserCreateServlet extends HttpServlet {
 
-    private static final UserCache USER_CACHE = UserCache.getInstance();
+    private static final StorageCache USER_CACHE = StorageCache.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -27,6 +25,6 @@ public class UserCreateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         USER_CACHE.addUser(new User(req.getParameter("name"), req.getParameter("login"), req.getParameter("password"), req.getParameter("email")));
-        resp.sendRedirect(String.format("%s/", req.getContextPath()));
+        resp.sendRedirect(String.format("%s/user/view", req.getContextPath()));
     }
 }

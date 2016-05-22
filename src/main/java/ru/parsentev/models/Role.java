@@ -1,7 +1,5 @@
 package ru.parsentev.models;
 
-import ru.parsentev.store.Base;
-
 /**
  * TODO: comment.
  */

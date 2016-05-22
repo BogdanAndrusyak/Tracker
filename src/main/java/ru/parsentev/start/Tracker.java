@@ -5,10 +5,10 @@ import ru.parsentev.models.*;
 import java.util.Calendar;
 
 /**
- * The class stores the items and processes them.
+ * The class stores the getAllItems and processes them.
  */
 class Tracker {
-	/** The field keeps all the items. */
+	/** The field keeps all the getAllItems. */
 	private final Item[] items = new Item[10];
 
 	/** Position when adding a new item. */
@@ -31,10 +31,10 @@ class Tracker {
 	 * @param id ID the requested item.
 	 * @return The desired item.
      */
-	protected Item findById(String id) {
+	protected Item findById(int id) {
 		Item result = null;
 		for (Item item : items) {
-			if (item != null && item.getId().equals(id)){
+			if (item != null && item.getId() == id){
 				result = item;
 				break;
 			}
@@ -46,9 +46,9 @@ class Tracker {
 	 * Generate a unique id.
 	 * @return New id.
      */
-	private String generateId() {
+	private int generateId() {
 		//return String.valueOf(System.currentTimeMillis() + RN.nextInt());
-		return String.valueOf(idPosition++);
+		return idPosition++;
 	}
 
 	/**
@@ -69,7 +69,7 @@ class Tracker {
      */
 	public void edit(Item item) {
 		for(int i = 0; i < items.length; i++) {
-			if(items[i] != null && item.getId().equals(items[i].getId())) {
+			if(items[i] != null && item.getId() == items[i].getId()) {
 				items[i] = item;
 				break;
 			}
@@ -80,9 +80,9 @@ class Tracker {
 	 * Delete item by ID.
 	 * @param id ID.
      */
-	public void delete(String id) {
+	public void delete(int id) {
 		for(int i = 0; i < items.length; i++) {
-			if(items[i] != null && items[i].getId().equals(id)) {
+			if(items[i] != null && items[i].getId() == id) {
 				items[i] = null;
 				position--; 
 				break;
@@ -114,7 +114,7 @@ class Tracker {
 	public Item findByCreate(Calendar create) {
 		Item result = null;
 		for(Item item : items) {
-			if(item != null && item.getCreate() == create) {
+			if(item != null && item.getCreateDate() == create) {
 				result = item;
 				break;
 			}
@@ -127,9 +127,9 @@ class Tracker {
 	 * @param id ID existing item.
 	 * @param comment New comment.
      */
-	public void addComment(String id, Comment comment) {
+	public void addComment(int id, Comment comment) {
 		for (int i = 0; i < items.length; i++) {
-			if (items[i] != null && id.equals(items[i].getId())) {
+			if (items[i] != null && id == items[i].getId()) {
 				items[i].addComment(comment);
 			}
 		}

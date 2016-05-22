@@ -2,6 +2,7 @@ package ru.parsentev.store;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.parsentev.models.Comment;
 import ru.parsentev.models.Item;
 import ru.parsentev.models.Role;
 import ru.parsentev.models.User;
@@ -43,14 +44,14 @@ public class JdbcStorage implements Storage{
         final List<User> users = new ArrayList<>();
         try {
             Statement statement = this.connection.createStatement();
-            ResultSet rs = statement.executeQuery("select u.id, u.name, u.login, u.password, u.email, u.create_date, u.role_id, r.name as role_name from users as u join roles as r on u.role_id = r.id order by id");
+            ResultSet rs = statement.executeQuery("select u.id, u.name, u.login, u.password, u.email, u.create_date, u.role_id, r.name as role_name from users as u join roles as r on u.role_id = r.id order by u.id");
             while(rs.next()) {
                 //todo work with date not good
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTimeInMillis(rs.getTimestamp("create_date").getTime());
 
                 users.add(new User(rs.getInt("id"), new Role(rs.getInt("role_id"), rs.getString("role_name")), rs.getString("name"), rs.getString("login"),
-                        rs.getString("password"), rs.getString("email"), calendar));
+                        rs.getString("password"), rs.getString("email"), calendar, this.getItemsByUserId(rs.getInt("id"))));
             }
         } catch (SQLException e) {
             Log.error(e.getMessage(), e);
@@ -109,7 +110,7 @@ public class JdbcStorage implements Storage{
     }
 
     @Override
-    public User get(int id) {
+    public User getUserById(int id) {
         User user;
         try {
             PreparedStatement statement = this.connection.prepareStatement("select u.id, u.name, u.login, u.password, u.email, u.create_date, u.role_id, r.name as role_name from users as u join roles as r on u.role_id = r.id where u.id = ?");
@@ -121,7 +122,7 @@ public class JdbcStorage implements Storage{
                 calendar.setTimeInMillis(rs.getTimestamp("create_date").getTime());
 
                 user = new User(rs.getInt("id"), new Role(rs.getInt("role_id"), rs.getString("role_name")), rs.getString("name"),
-                        rs.getString("login"), rs.getString("password"), rs.getString("email"), calendar);
+                        rs.getString("login"), rs.getString("password"), rs.getString("email"), calendar, this.getItemsByUserId(rs.getInt("id")));
                 return user;
             }
         } catch (SQLException e) {
@@ -154,15 +155,14 @@ public class JdbcStorage implements Storage{
         }
     }
 
-
-
+    @Override
     public int addItem(Item item) {
         try {
             PreparedStatement statement = this.connection.prepareStatement("insert into items(name, description, create_date, user_id) values(?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, item.getName());
-            statement.setString(1, item.getDescription());
-            statement.setTimestamp(1, Timestamp.valueOf(item.getCreate().toString()));
-            statement.setInt(1, item.author.getId());
+            statement.setString(2, item.getDescription());
+            statement.setTimestamp(3, new Timestamp(item.getCreateDate().getTime().getTime()));
+            statement.setInt(4, item.getAuthorId());
             statement.executeUpdate();
 
             ResultSet generatedKeys = statement.getGeneratedKeys();
@@ -175,22 +175,112 @@ public class JdbcStorage implements Storage{
         throw new IllegalStateException("Could not create new item");
     }
 
-    public void editItem(Item item) {
+    // todo need realization with users data for administration tools
+    @Override
+    public Collection<Item> getAllItems() {
+        ArrayList<Item> items = new ArrayList<>();
+
+//        try {
+//            Statement statement = this.connection.createStatement();
+//            ResultSet rs = statement.executeQuery("select i.id, i.name, i.description, i.create_date, i.user_id, " +
+//                    "c.id as comment_id, c.description as comment_description, c.create_date as comment_create_date, " +
+//                    "f.id as file_id, f.file from items as i \n" +
+//                    "left join users as u on i.user_id = u.id\n" +
+//                    "left join comments as c on c.item_id = i.id\n" +
+//                    "left join files as f on f.item_id = i.id order by i.id; ");
+//            while (rs.next()) {
+//                items.add(new Item())
+//            }
+//        } catch (SQLException e) {
+//            Log.error(e.getMessage(), e);
+//        }
+
+        return items;
+    }
+
+    @Override
+    public Collection<Item> getItemsByUserId(int userId) {
+        ArrayList<Item> items = new ArrayList<>();
         try {
-            PreparedStatement statement = this.connection.prepareStatement("update items set name = ?, description = ? where id = ?");
-            statement.setString(1, item.getName());
-            statement.setString(2, item.getDescription());
-            statement.setInt(3, Integer.valueOf(item.getId())); //todo change id on int type
+            PreparedStatement statement = this.connection.prepareStatement("select i.id, i.name, i.description, i.create_date, i.user_id from items as i \n" +
+                    "left join users as u on i.user_id = u.id where u.id = ? order by i.id;");
+
+            statement.setInt(1, userId);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(rs.getTimestamp("create_date").getTime());
+
+                items.add(new Item(rs.getInt("id"), rs.getString("name"), rs.getString("description"), calendar, rs.getInt("user_id"), this.getCommentsByItemId(rs.getInt("id")), this.getFilesByItemId(rs.getInt("id"))));
+            }
+        } catch (SQLException e) {
+            Log.error(e.getMessage(), e);
+        }
+
+        return items;
+    }
+
+    //todo maybe will do this method private not Override?
+    private Collection<Comment> getCommentsByItemId(int id) {
+        Collection<Comment> comments = new ArrayList<>();
+        try {
+            PreparedStatement statement = this.connection.prepareStatement("select c.id, c.description, c.create_date, c.item_id from comments as c left join items as i on c.item_id = i.id where i.id = ? order by c.id;");
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Calendar createDate = Calendar.getInstance();
+                createDate.setTimeInMillis(rs.getTimestamp("create_date").getTime());
+
+                comments.add(new Comment(rs.getInt("id"), rs.getString("description"), createDate));
+            }
+        } catch (SQLException e) {
+            Log.error(e.getMessage(), e);
+        }
+        return comments;
+    }
+
+    // todo and this
+    private Collection<ru.parsentev.models.File> getFilesByItemId(int id) {
+        Collection<ru.parsentev.models.File> files = new ArrayList<>();
+        try {
+            PreparedStatement statement = this.connection.prepareStatement("select f.id, f.file, f.item_id from files as f left join items as i on f.item_id = i.id where i.id = ? order by f.id; ");
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                files.add(new ru.parsentev.models.File(rs.getInt("id"), rs.getBytes("file")));
+            }
+        } catch (SQLException e) {
+            Log.error(e.getMessage(), e);
+        }
+        return files;
+    }
+
+    @Override
+    public void deleteItem(int id) {
+        try {
+            //first must delete all comments and files whom references on this item
+            PreparedStatement statement1 = this.connection.prepareStatement("delete from comments where item_id = ?");
+            statement1.setInt(1, id);
+            statement1.executeUpdate();
+
+            PreparedStatement statement2 = this.connection.prepareStatement("delete from files where item_id = ?");
+            statement1.setInt(1, id);
+            statement1.executeUpdate();
+
+            PreparedStatement statement = this.connection.prepareStatement("delete from items where id = ?");
+            statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             Log.error(e.getMessage(), e);
         }
     }
 
-    public void deleteItem(int id) {
+    public void editItem(Item item) {
         try {
-            PreparedStatement statement = this.connection.prepareStatement("delete from items where id = ?");
-            statement.setInt(1, id);
+            PreparedStatement statement = this.connection.prepareStatement("update items set name = ?, description = ? where id = ?");
+            statement.setString(1, item.getName());
+            statement.setString(2, item.getDescription());
+            statement.setInt(3, Integer.valueOf(item.getId())); //todo change id on int type
             statement.executeUpdate();
         } catch (SQLException e) {
             Log.error(e.getMessage(), e);

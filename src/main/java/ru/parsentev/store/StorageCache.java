@@ -47,13 +47,23 @@ public class StorageCache implements Storage {
     }
 
     @Override
-    public User get(int id) {
-        return this.storage.get(id);
+    public User getUserById(int id) {
+        return this.storage.getUserById(id);
     }
 
     @Override
     public int addItem(Item item) {
         return this.storage.addItem(item);
+    }
+
+    @Override
+    public Collection<Item> getAllItems() {
+        return this.storage.getAllItems();
+    }
+
+    @Override
+    public Collection<Item> getItemsByUserId(int userId) {
+        return this.storage.getItemsByUserId(userId);
     }
 
     @Override
@@ -70,6 +80,11 @@ public class StorageCache implements Storage {
             }
         }
         return exists;
+    }
+
+    @Override
+    public void deleteItem(int id) {
+        this.storage.deleteItem(id);
     }
 
     public User findByLogin(String login) {

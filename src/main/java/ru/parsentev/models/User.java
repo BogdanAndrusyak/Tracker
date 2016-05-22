@@ -1,21 +1,22 @@
 package ru.parsentev.models;
 
-import ru.parsentev.store.Base;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.GregorianCalendar;
 
 /**
  * TODO: comment.
  */
 public class User extends Base {
+
     private Role role;
     private String name;
     private String login;
     private String password;
     private String email;
     private Calendar createDate;
+    private Collection<Item> items; // todo can do this like one method from base?
 
     //todo id must be assigned in the base? how create user without id?
     //for create user
@@ -40,7 +41,7 @@ public class User extends Base {
     }
 
     // from base
-    public User(int id, Role role, String name, String login, String password, String email, Calendar createDate) {
+    public User(int id, Role role, String name, String login, String password, String email, Calendar createDate, Collection<Item> items) {
         this.id = id;
         this.role = role;
         this.name = name;
@@ -48,6 +49,7 @@ public class User extends Base {
         this.password = password;
         this.email = email;
         this.createDate = createDate;
+        this.items = items;
     }
 
     public Role getRole() {
@@ -84,6 +86,10 @@ public class User extends Base {
 
     public String getSimpleCreateDate() {
         return new SimpleDateFormat("dd/M/yyyy hh:mm:ss a").format(getCreateDate().getTime());
+    }
+
+    public Collection<Item> getItems() {
+        return items;
     }
 
     @Override
