@@ -7,6 +7,11 @@
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/view-style.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/edit-user-style.css"/>">
     <title>View: Tracker</title>
+    <script>
+        function validate() {
+            var result = true
+        }
+    </script>
 </head>
 <body>
 <%--edit user popup page--%>
