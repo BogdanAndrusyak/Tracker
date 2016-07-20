@@ -18,11 +18,11 @@
         <form class="auth-form" action="${pageContext.servletContext.contextPath}/signin" method="post">
             <div class="row row-login">
                 <span class="icon icon-login"><img src="<c:url value="/resources/images/icon-login.png"/>"></span>
-                <input type="text" name="login" placeholder="Login"><br>
+                <input type="text" name="login" placeholder="Login" required><br>
             </div>
             <div class="row row-password">
                 <span class="icon icon-password"><img src="<c:url value="/resources/images/icon-password.png"/>"></span>
-                <input type="password" name="password" placeholder="Password"><br>
+                <input type="password" name="password" placeholder="Password" required><br>
             </div>
             <div class="row row-submit">
                 <input type="submit" value="Login"><br>

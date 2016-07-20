@@ -78,7 +78,7 @@ insert into roles(name)
 select 'user'
 where not exists (select 1 from roles where name = 'user');
 
--- add users, administrator
+-- add getUsers, administrator
 do $$
 begin
 if not exists (select * from users where name = 'admin' and role_id = 1)

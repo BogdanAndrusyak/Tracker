@@ -4,6 +4,7 @@ import ru.parsentev.models.Item;
 import ru.parsentev.models.Role;
 import ru.parsentev.models.User;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class StorageCache implements Storage {
     }
 
     @Override
-    public Collection<User> users() {
-        return this.storage.users();
+    public List<User> getUsers() {
+        return this.storage.getUsers();
     }
 
     @Override
@@ -57,13 +58,23 @@ public class StorageCache implements Storage {
     }
 
     @Override
-    public Collection<Item> getAllItems() {
+    public List<Item> getAllItems() {
         return this.storage.getAllItems();
     }
 
     @Override
-    public Collection<Item> getItemsByUserId(int userId) {
+    public List<Item> getItemsByUserId(int userId) {
         return this.storage.getItemsByUserId(userId);
+    }
+
+    //todo only for test, maybe do refactor?
+    public List<Integer> getUsersIds() {
+        List<Integer> ids = new ArrayList<>();
+        for (User user : storage.getUsers()) {
+            ids.add(user.getId());
+        }
+
+        return ids;
     }
 
     @Override
@@ -73,7 +84,7 @@ public class StorageCache implements Storage {
 
     public boolean isCredential(String login, String password) {
         boolean exists = false;
-        for (User user : this.storage.users()) {
+        for (User user : this.storage.getUsers()) {
             if (login.equals(user.getLogin()) && password.equals(user.getPassword())) {
                 exists = true;
                 break;
@@ -89,7 +100,7 @@ public class StorageCache implements Storage {
 
     public User findByLogin(String login) {
         User resultUser = null;
-        for (User user : this.storage.users()) {
+        for (User user : this.storage.getUsers()) {
             if (login.equals(user.getLogin())) {
                 resultUser = user;
                 break;

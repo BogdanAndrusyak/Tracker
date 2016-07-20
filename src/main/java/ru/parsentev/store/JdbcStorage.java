@@ -40,7 +40,7 @@ public class JdbcStorage implements Storage{
     }
 
     @Override
-    public Collection<User> users() {
+    public List<User> getUsers() {
         final List<User> users = new ArrayList<>();
         try {
             Statement statement = this.connection.createStatement();
@@ -175,9 +175,9 @@ public class JdbcStorage implements Storage{
         throw new IllegalStateException("Could not create new item");
     }
 
-    // todo need realization with users data for administration tools
+    // todo need realization with getUsers data for administration tools
     @Override
-    public Collection<Item> getAllItems() {
+    public List<Item> getAllItems() {
         ArrayList<Item> items = new ArrayList<>();
 
 //        try {
@@ -185,7 +185,7 @@ public class JdbcStorage implements Storage{
 //            ResultSet rs = statement.executeQuery("select i.id, i.name, i.description, i.create_date, i.user_id, " +
 //                    "c.id as comment_id, c.description as comment_description, c.create_date as comment_create_date, " +
 //                    "f.id as file_id, f.file from items as i \n" +
-//                    "left join users as u on i.user_id = u.id\n" +
+//                    "left join getUsers as u on i.user_id = u.id\n" +
 //                    "left join comments as c on c.item_id = i.id\n" +
 //                    "left join files as f on f.item_id = i.id order by i.id; ");
 //            while (rs.next()) {
@@ -199,7 +199,7 @@ public class JdbcStorage implements Storage{
     }
 
     @Override
-    public Collection<Item> getItemsByUserId(int userId) {
+    public List<Item> getItemsByUserId(int userId) {
         ArrayList<Item> items = new ArrayList<>();
         try {
             PreparedStatement statement = this.connection.prepareStatement("select i.id, i.name, i.description, i.create_date, i.user_id from items as i \n" +

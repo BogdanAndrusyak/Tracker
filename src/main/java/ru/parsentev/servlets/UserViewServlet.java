@@ -19,7 +19,7 @@ public class UserViewServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("users", USER_CACHE.users());
+        req.setAttribute("users", USER_CACHE.getUsers());
         HttpSession session = req.getSession();
         synchronized (session) {
             req.setAttribute("user", USER_CACHE.findByLogin((String) session.getAttribute("login"))); //todo maybe not security??

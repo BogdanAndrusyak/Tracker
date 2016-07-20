@@ -7,11 +7,11 @@
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/view-style.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/edit-user-style.css"/>">
     <title>View: Tracker</title>
-    <script>
-        function validate() {
-            var result = true
-        }
-    </script>
+    <%--<script>--%>
+        <%--function validate() {--%>
+            <%--var result = true--%>
+        <%--}--%>
+    <%--</script>--%>
 </head>
 <body>
 <%--edit user popup page--%>
@@ -145,7 +145,7 @@
         </div>
         <div class="tasks-scroll">
             <form action="${pageContext.request.contextPath}/item/create" method="post" class="addTask">
-                <input type="text" name="itemName" placeholder="Add new task">
+                <input type="text" name="itemName" placeholder="Add new task" required>
                 <a href=""><img src="<c:url value="/resources/images/add-more.png"/>"></a>
                 <input type="image" src="<c:url value="/resources/images/add-button.png"/>" alt="Add Form">
                 <%--todo add to form more input fields--%>

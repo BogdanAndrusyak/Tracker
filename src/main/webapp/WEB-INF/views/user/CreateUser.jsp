@@ -13,19 +13,19 @@
         <form class="auth-form" action="" method="post">
             <div class="row row-name">
                 <span class="icon icon-name"><img src="<c:url value="/resources/images/icon-name.png"/>"></span>
-                <input type="text" name="name" placeholder="Name"><br>
+                <input type="text" name="name" placeholder="Name" required><br>
             </div>
             <div class="row row-login">
                 <span class="icon icon-login"><img src="<c:url value="/resources/images/icon-login.png"/>"></span>
-                <input type="text" name="login" placeholder="Login"><br>
+                <input type="text" name="login" placeholder="Login" required><br>
             </div>
             <div class="row row-login">
                 <span class="icon icon-email"><img src="<c:url value="/resources/images/icon-email.png"/>"></span>
-                <input type="email" name="email" placeholder="Email"><br>
+                <input type="email" name="email" placeholder="Email" required><br>
             </div>
             <div class="row row-password">
                 <span class="icon icon-password"><img src="<c:url value="/resources/images/icon-password.png"/>"></span>
-                <input type="password" name="password" placeholder="Password"><br>
+                <input type="password" name="password" placeholder="Password" required><br>
             </div>
             <div class="row row-submit">
                 <input type="submit" value="Register"><br>

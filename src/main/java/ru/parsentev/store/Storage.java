@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface Storage {
 
-    Collection<User> users();
+    List<User> getUsers();
 
     int addUser(final User user);
 
@@ -23,9 +23,9 @@ public interface Storage {
 
     List<Role> getRoles();
 
-    Collection<Item> getAllItems();
+    List<Item> getAllItems();
 
-    Collection<Item> getItemsByUserId(int userId);
+    List<Item> getItemsByUserId(int userId);
 //
 //    Collection<Comment> getCommentsByItemId(int id);
 //
