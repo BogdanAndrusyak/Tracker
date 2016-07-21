@@ -180,20 +180,23 @@ public class JdbcStorage implements Storage{
     public List<Item> getAllItems() {
         ArrayList<Item> items = new ArrayList<>();
 
-//        try {
-//            Statement statement = this.connection.createStatement();
-//            ResultSet rs = statement.executeQuery("select i.id, i.name, i.description, i.create_date, i.user_id, " +
-//                    "c.id as comment_id, c.description as comment_description, c.create_date as comment_create_date, " +
-//                    "f.id as file_id, f.file from items as i \n" +
-//                    "left join getUsers as u on i.user_id = u.id\n" +
-//                    "left join comments as c on c.item_id = i.id\n" +
-//                    "left join files as f on f.item_id = i.id order by i.id; ");
-//            while (rs.next()) {
-//                items.add(new Item())
-//            }
-//        } catch (SQLException e) {
-//            Log.error(e.getMessage(), e);
-//        }
+        try {
+            Statement statement = this.connection.createStatement();
+            ResultSet rs = statement.executeQuery("select i.id, i.name, i.description, i.create_date, i.user_id, " +
+                    "c.id as comment_id, c.description as comment_description, c.create_date as comment_create_date, " +
+                    "f.id as file_id, f.file from items as i \n" +
+                    "left join users as u on i.user_id = u.id\n" +
+                    "left join comments as c on c.item_id = i.id\n" +
+                    "left join files as f on f.item_id = i.id order by i.id; ");
+            while (rs.next()) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(rs.getTimestamp("create_date").getTime());
+
+                items.add(new Item(rs.getInt("id"), rs.getString("name"), rs.getString("description"), calendar, rs.getInt("user_id"), getCommentsByItemId(rs.getInt("id")), getFilesByItemId(rs.getInt("id"))));
+            }
+        } catch (SQLException e) {
+            Log.error(e.getMessage(), e);
+        }
 
         return items;
     }
