@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * TODO: comment.
+ * TODO: comment..
  * Created by Bogdan on 4/20/2016.
  */
 public class Settings {
