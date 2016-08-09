@@ -26,13 +26,26 @@ public class UserCreateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        USER_CACHE.addUser(new User(req.getParameter("name"), req.getParameter("login"), req.getParameter("password"), req.getParameter("email"), req.getParameter("country"), req.getParameter("city")));
+        String name = req.getParameter("name");
+        String login = req.getParameter("login");
+        String password = req.getParameter("password");
+        String email = req.getParameter("email");
+        String country = req.getParameter("country");
+        String city = req.getParameter("city");
 
-        HttpSession session = req.getSession();
-        synchronized (session) {
-            session.setAttribute("login", req.getParameter("login"));
-            session.setAttribute("roleId", USER_CACHE.findByLogin(req.getParameter("login")).getRole().getId()); //todo can does not using, only user variable
+        //if invalidate data -
+        if (name.equals("") || login.equals("") || password.equals("") || email.equals("") || country.equals("") || city.equals("")) {
+            req.setAttribute("error", "Error. Blank fields");
+            doGet(req, resp);
+        } else {
+            USER_CACHE.addUser(new User(name, login, password, email, country, city));
+
+            HttpSession session = req.getSession();
+            synchronized (session) {
+                session.setAttribute("login", req.getParameter("login"));
+                session.setAttribute("roleId", USER_CACHE.findByLogin(req.getParameter("login")).getRole().getId()); //todo can does not using, only user variable
+            }
+            req.getRequestDispatcher("/WEB-INF/views/user/ViewUser.jsp").forward(req, resp);
         }
-        req.getRequestDispatcher("/WEB-INF/views/user/ViewUser.jsp").forward(req, resp);
     }
 }

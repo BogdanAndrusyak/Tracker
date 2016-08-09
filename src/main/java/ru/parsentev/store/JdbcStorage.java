@@ -41,14 +41,14 @@ public class JdbcStorage implements Storage{
         final List<User> users = new ArrayList<>();
         try {
             Statement statement = this.connection.createStatement();
-            ResultSet rs = statement.executeQuery("select u.id, u.name, u.login, u.password, u.email, u.create_date, u.role_id, r.name as role_name from users as u join roles as r on u.role_id = r.id order by u.id");
+            ResultSet rs = statement.executeQuery("select u.id, u.name, u.login, u.password, u.email, u.country, u.city, u.create_date, u.role_id, r.name as role_name from users as u join roles as r on u.role_id = r.id order by u.id");
             while(rs.next()) {
                 //todo work with date not good
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTimeInMillis(rs.getTimestamp("create_date").getTime());
 
                 users.add(new User(rs.getInt("id"), new Role(rs.getInt("role_id"), rs.getString("role_name")), rs.getString("name"), rs.getString("login"),
-                        rs.getString("password"), rs.getString("email"), calendar, this.getItemsByUserId(rs.getInt("id"))));
+                        rs.getString("password"), rs.getString("email"), rs.getString("country"), rs.getString("city"), calendar, this.getItemsByUserId(rs.getInt("id"))));
             }
         } catch (SQLException e) {
             Log.error(e.getMessage(), e);
@@ -59,13 +59,15 @@ public class JdbcStorage implements Storage{
     @Override
     public int addUser(User user) {
         try {
-            PreparedStatement statement = this.connection.prepareStatement("insert into users(name, login, password, email, create_date, role_id) values(?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = this.connection.prepareStatement("insert into users(name, login, password, email, country, city, create_date, role_id) values(?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getName());
             statement.setString(2, user.getLogin());
             statement.setString(3, user.getPassword());
             statement.setString(4, user.getEmail());
-            statement.setTimestamp(5, new Timestamp(user.getCreateDate().getTime().getTime()));
-            statement.setInt(6, user.getRole().getId());
+            statement.setString(5, user.getCountry());
+            statement.setString(6, user.getCity());
+            statement.setTimestamp(7, new Timestamp(user.getCreateDate().getTime().getTime()));
+            statement.setInt(8, user.getRole().getId());
 
             statement.executeUpdate();
 
@@ -82,13 +84,15 @@ public class JdbcStorage implements Storage{
     @Override
     public void editUser(User user) {
         try {
-            PreparedStatement statement = this.connection.prepareStatement("update users set name = ?, login = ?, password = ?, email = ?, role_id = ? where id = ?");
+            PreparedStatement statement = this.connection.prepareStatement("update users set name = ?, login = ?, password = ?, email = ?, country = ?, city = ?,role_id = ? where id = ?");
             statement.setString(1, user.getName());
             statement.setString(2, user.getLogin());
             statement.setString(3, user.getPassword());
             statement.setString(4, user.getEmail());
-            statement.setInt(5, user.getRole().getId());
-            statement.setInt(6,user.getId());
+            statement.setString(5, user.getCountry());
+            statement.setString(6, user.getCity());
+            statement.setInt(7, user.getRole().getId());
+            statement.setInt(8,user.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             Log.error(e.getMessage(), e);
@@ -110,7 +114,7 @@ public class JdbcStorage implements Storage{
     public User getUserById(int id) {
         User user;
         try {
-            PreparedStatement statement = this.connection.prepareStatement("select u.id, u.name, u.login, u.password, u.email, u.create_date, u.role_id, r.name as role_name from users as u join roles as r on u.role_id = r.id where u.id = ?");
+            PreparedStatement statement = this.connection.prepareStatement("select u.id, u.name, u.login, u.password, u.email, u.country, u.city, u.create_date, u.role_id, r.name as role_name from users as u join roles as r on u.role_id = r.id where u.id = ?");
             statement.setInt(1, id);
 
             ResultSet rs = statement.executeQuery();
@@ -119,7 +123,7 @@ public class JdbcStorage implements Storage{
                 calendar.setTimeInMillis(rs.getTimestamp("create_date").getTime());
 
                 user = new User(rs.getInt("id"), new Role(rs.getInt("role_id"), rs.getString("role_name")), rs.getString("name"),
-                        rs.getString("login"), rs.getString("password"), rs.getString("email"), calendar, this.getItemsByUserId(rs.getInt("id")));
+                        rs.getString("login"), rs.getString("password"), rs.getString("email"), rs.getString("country"), rs.getString("city"),calendar, this.getItemsByUserId(rs.getInt("id")));
                 return user;
             }
         } catch (SQLException e) {

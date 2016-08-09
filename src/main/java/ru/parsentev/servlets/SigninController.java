@@ -27,16 +27,17 @@ public class SigninController extends HttpServlet{
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        if (USER_CACHE.isCredential(login, password)) {
+        //validate data?
+        if (login.equals("") || password.equals("") || !USER_CACHE.isCredential(login, password)) {
+            req.setAttribute("error", "Credential invalid");
+            doGet(req, resp);
+        } else {
             HttpSession session = req.getSession();
             synchronized (session) {
                 session.setAttribute("login", login);
                 session.setAttribute("roleId", USER_CACHE.findByLogin(login).getRole().getId()); //todo can does not using, only user variable
             }
             resp.sendRedirect(String.format("%s/user/view", req.getContextPath()));
-        } else {
-            req.setAttribute("error", "Credential invalid");
-            doGet(req, resp);
         }
     }
 }

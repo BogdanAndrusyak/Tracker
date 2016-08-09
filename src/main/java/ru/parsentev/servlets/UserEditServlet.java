@@ -35,7 +35,7 @@ public class UserEditServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         USER_CACHE.editUser(new User(Integer.valueOf(req.getParameter("id")), new Role(Integer.valueOf(req.getParameter("role-id"))),
-                req.getParameter("name"), req.getParameter("login"), req.getParameter("password"), req.getParameter("email")));
+                req.getParameter("name"), req.getParameter("login"), req.getParameter("password"), req.getParameter("email"), req.getParameter("country"), req.getParameter("city")));
         resp.sendRedirect(String.format("%s/user/view", req.getContextPath()));
     }
 }

@@ -35,25 +35,29 @@ public class User extends Base {
     }
 
     // for edit user
-    public User(int id, Role role, String name, String login, String password, String email) {
+    public User(int id, Role role, String name, String login, String password, String email, String country, String city) {
         this.id = id;
         this.role = role;
         this.name = name;
         this.login = login;
         this.password = password;
         this.email = email;
+        this.country = country;
+        this.city = city;
         this.createDate = new GregorianCalendar();
         this.categories.add(new Category("No project"));
     }
 
     // from base
-    public User(int id, Role role, String name, String login, String password, String email, Calendar createDate, Collection<Item> items) {
+    public User(int id, Role role, String name, String login, String password, String email, String country, String city, Calendar createDate, Collection<Item> items) {
         this.id = id;
         this.role = role;
         this.name = name;
         this.login = login;
         this.password = password;
         this.email = email;
+        this.country = country;
+        this.city = city;
         this.createDate = createDate;
         this.items = items;
         this.categories.add(new Category("No project"));

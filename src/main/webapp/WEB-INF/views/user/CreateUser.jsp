@@ -26,7 +26,6 @@
 
         function validate() {
             var result = true;
-            alert($( "#country-list option:selected" ).text());
             if ($( "#country-list option:selected" ).text() == "Your country") {
                 result = false;
             }
@@ -35,6 +34,12 @@
     </script>
 </head>
 <body>
+    <c:if test="${error != ''}">
+        <div class="error">
+            <c:out value="${error}"/>
+        </div>
+    </c:if>
+
     <div class="logo">
         <div><span style="color:#61bb46;">T</span><span style="color:#fdb827;">r</span><span style="color:#f5821f;">a</span><span style="color:#eb5e2f;">c</span><span style="color:#e03a3e;">k</span><span style="color:#963d97;">e</span><span style="color:#009ddc;">r</span></div>
     </div>
