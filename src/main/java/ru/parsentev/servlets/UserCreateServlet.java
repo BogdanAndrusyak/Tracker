@@ -3,10 +3,12 @@ package ru.parsentev.servlets;
 import ru.parsentev.models.User;
 import ru.parsentev.store.StorageCache;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -24,7 +26,13 @@ public class UserCreateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        USER_CACHE.addUser(new User(req.getParameter("name"), req.getParameter("login"), req.getParameter("password"), req.getParameter("email")));
-        resp.sendRedirect(String.format("%s/user/view", req.getContextPath()));
+        USER_CACHE.addUser(new User(req.getParameter("name"), req.getParameter("login"), req.getParameter("password"), req.getParameter("email"), req.getParameter("country"), req.getParameter("city")));
+
+        HttpSession session = req.getSession();
+        synchronized (session) {
+            session.setAttribute("login", req.getParameter("login"));
+            session.setAttribute("roleId", USER_CACHE.findByLogin(req.getParameter("login")).getRole().getId()); //todo can does not using, only user variable
+        }
+        req.getRequestDispatcher("/WEB-INF/views/user/ViewUser.jsp").forward(req, resp);
     }
 }

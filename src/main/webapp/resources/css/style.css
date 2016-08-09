@@ -10,7 +10,6 @@ body {
 	font-size: 1.7em;
 	line-height: 47px;
 	color: white;
-	border: 1px solid yellow;
 	border-radius: 4px;
 	box-shadow: 0 1px 3px rgba(50,50,50,0.08);
 }
@@ -98,4 +97,22 @@ body {
 }
 .card-auth .create-user a:hover {
 	text-decoration: underline;
+}
+.card-auth .icon-country img {
+	margin-top: 13px;
+}
+/**/
+input.invalid::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+	color:    red !important;
+}
+input.invalid:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color:    red !important;
+	opacity:  1;
+}
+input.invalid::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color:    red !important;
+	opacity:  1;
+}
+input.invalid:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	color:    red !important;
 }

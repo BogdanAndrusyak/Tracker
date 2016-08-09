@@ -13,6 +13,7 @@ public class Item extends Base {
 	protected int authorId;
 	protected Collection<Comment> comments;
 	protected Collection<File> files;
+	protected Category category;
 
 	Item() {
 
@@ -56,7 +57,7 @@ public class Item extends Base {
 		this.comments.add(comment);
 	}
 
-	public Collection<Comment> getAllComments() {
+	public Collection<Comment> getComments() {
 		return this.comments;
 	}
 }

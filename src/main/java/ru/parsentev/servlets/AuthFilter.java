@@ -20,7 +20,7 @@ public class AuthFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
         //check if uri contains link to a file resource, bypass security filter
         String uri = ((HttpServletRequest) req).getRequestURI();
-        if (uri.contains("resources/")) {
+        if (uri.contains("resources/") || uri.contains("/json")) {
             chain.doFilter(req, resp);
             return;
         }

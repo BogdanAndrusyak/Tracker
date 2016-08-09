@@ -22,6 +22,8 @@ create table if not exists users (
 	login text,
 	password text,
 	email text,
+	country text,
+	city text,
 	create_date timestamp not null default now(),
 	role_id int not null default 2 references roles(id)
 );
@@ -60,7 +62,8 @@ create table if not exists Status_Item (
 
 create table if not exists categories (
 	id serial primary key,
-	name text
+	name text,
+	user_id int not null references users(id)
 );
 
 create table if not exists Category_Item (

@@ -4,6 +4,24 @@
 <head>
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/style.css"/>">
     <title>Login: Tracker</title>
+    <script>
+        function validate() {
+            var result = true;
+            var login = document.getElementsByName("login")[0];
+            var password = document.getElementsByName("password")[0];
+
+            if(login.value == '') {
+                login.classList.add("invalid");
+                result = false;
+            }
+            if(password.value == '') {
+                password.classList.add("invalid");
+                result = false;
+            }
+
+            return result;
+        }
+    </script>
 </head>
 <body>
     <c:if test="${error != ''}">
@@ -15,14 +33,14 @@
         <div><span style="color:#61bb46;">T</span><span style="color:#fdb827;">r</span><span style="color:#f5821f;">a</span><span style="color:#eb5e2f;">c</span><span style="color:#e03a3e;">k</span><span style="color:#963d97;">e</span><span style="color:#009ddc;">r</span></div>
     </div>
     <div class="card-auth">
-        <form class="auth-form" action="${pageContext.servletContext.contextPath}/signin" method="post">
+        <form class="auth-form" action="${pageContext.servletContext.contextPath}/signin" method="post" onsubmit="return validate();">
             <div class="row row-login">
-                <span class="icon icon-login"><img src="<c:url value="/resources/images/icon-login.png"/>"></span>
-                <input type="text" name="login" placeholder="Login" required><br>
+                <span class="icon icon-login"><img src="<c:url value="/resources/img/icon-login.png"/>"></span>
+                <input type="text" name="login" placeholder="Login"><br>
             </div>
             <div class="row row-password">
-                <span class="icon icon-password"><img src="<c:url value="/resources/images/icon-password.png"/>"></span>
-                <input type="password" name="password" placeholder="Password" required><br>
+                <span class="icon icon-password"><img src="<c:url value="/resources/img/icon-password.png"/>"></span>
+                <input type="password" name="password" placeholder="Password"><br>
             </div>
             <div class="row row-submit">
                 <input type="submit" value="Login"><br>

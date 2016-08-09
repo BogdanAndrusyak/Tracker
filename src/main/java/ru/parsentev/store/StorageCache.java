@@ -1,8 +1,6 @@
 package ru.parsentev.store;
 
-import ru.parsentev.models.Item;
-import ru.parsentev.models.Role;
-import ru.parsentev.models.User;
+import ru.parsentev.models.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -107,5 +105,15 @@ public class StorageCache implements Storage {
             }
         }
         return resultUser;
+    }
+
+    @Override
+    public void addCommentToItem(int id, Comment comment) {
+        this.storage.addCommentToItem(id, comment);
+    }
+
+    @Override
+    public void addCategoryToUser(int id, Category category) {
+        this.storage.addCategoryToUser(id, category);
     }
 }

@@ -2,10 +2,7 @@ package ru.parsentev.store;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.parsentev.models.Comment;
-import ru.parsentev.models.Item;
-import ru.parsentev.models.Role;
-import ru.parsentev.models.User;
+import ru.parsentev.models.*;
 import ru.parsentev.service.Settings;
 
 import java.io.File;
@@ -285,8 +282,28 @@ public class JdbcStorage implements Storage{
             statement.setString(2, item.getDescription());
             statement.setInt(3, Integer.valueOf(item.getId())); //todo change id on int type
             statement.executeUpdate();
+            /*todo need add delete comments with item too*/
         } catch (SQLException e) {
             Log.error(e.getMessage(), e);
         }
+    }
+
+    @Override
+    public void addCommentToItem(int id, Comment comment) {
+        try {
+            PreparedStatement statement = this.connection.prepareStatement("insert into comments(description, create_date, item_id) values(?, ?, ?)");
+            statement.setString(1, comment.getDescription());
+            statement.setTimestamp(2, new Timestamp(comment.getCreateDate().getTime().getTime()));
+            statement.setInt(3, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            Log.error(e.getMessage(), e);
+        }
+    }
+
+    // todo realization not easy for me now, need rewrite all code, categories must be priory element than item in bd
+    @Override
+    public void addCategoryToUser(int id, Category category) {
+//        PreparedStatement statement = this.connection.prepareStatement()
     }
 }

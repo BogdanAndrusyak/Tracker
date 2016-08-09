@@ -16,4 +16,12 @@ public class Comment extends Base {
 		this.description = description;
 		this.createDate = createDate;
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public Calendar getCreateDate() {
+		return createDate;
+	}
 }

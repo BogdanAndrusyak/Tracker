@@ -35,5 +35,9 @@ public interface Storage {
 
     void deleteItem(int id);
 
+    void addCommentToItem(int id, Comment comment);
+
+    void addCategoryToUser(int id, Category category);
+
     void close();
 }
