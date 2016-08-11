@@ -16,7 +16,28 @@ public class JsonController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/json");
         PrintWriter writer = new PrintWriter(resp.getOutputStream());
-        writer.append("[{\"countryName\":\"Ukraine\"}, {\"countryName\":\"Russia\"}]");
+        PrintWriter append = writer.append("{\"countries\":[" +
+                "{\"countryName\":\"Ukraine\"}, " +
+                "{\"countryName\":\"Russia\"}" +
+                "], " +
+                "\"cities\":[" +
+                    "{\"countryName\":\"Ukraine\", \"citiesList\":[" +
+                            "{\"cityName\":\"Kiev\"}, " +
+                            "{\"cityName\":\"Lviv\"}, " +
+                            "{\"cityName\":\"Kharkiv\"}, " +
+                            "{\"cityName\":\"Odessa\"}, " +
+                            "{\"cityName\":\"Ivano-Frankivsk\"}" +
+                        "]" +
+                    "}, " +
+                    "{\"countryName\":\"Russia\", \"citiesList\":[" +
+                            "{\"cityName\":\"Moscow\"}, " +
+                            "{\"cityName\":\"Saint Petersburg\"}, " +
+                            "{\"cityName\":\"Kazan\"}, " +
+                            "{\"cityName\":\"Nizhny Novgorod\"}, " +
+                            "{\"cityName\":\"Bryansk\"}" +
+                        "]" +
+                    "}" +
+                "]}");
         writer.flush();
     }
 }

@@ -8405,3 +8405,40 @@ a.optionPoints {
     text-align: center;
     padding-top: 8px;
 }
+
+/*-----------*/
+#EditUserView.task-archived-true input[name=name] {
+    text-decoration: line-through
+}
+#EditUserView > div {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto
+}
+
+#EditUserView .content_frame .center_box {
+    padding: 0 20px
+}
+
+#EditUserView.task-archived-false .formFooter .listFooterActions a[href='#close'], #EditUserkView.task-archived-true .formFooter .listFooterActions a[href='#open'] {
+    display: inline-block
+}
+/*----------*/
+span#show-password {
+    text-align: center;
+    float: right;
+    margin-top: 5px;
+    margin-right: 4px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    color: #000;
+    border: solid #1f628d 1px;
+    text-decoration: none;
+    background: none;
+    width: 15%;
+}
+span#show-password:hover {
+    background: #3cfaf0;
+    cursor: pointer;
+}

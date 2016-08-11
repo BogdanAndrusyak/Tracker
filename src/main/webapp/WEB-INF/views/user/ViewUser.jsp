@@ -264,84 +264,221 @@
           media="all" charset="utf-8">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script>
+        $(
+                $.ajax('../json', {
+                    method : 'get',
+                    complete: function (data) {
+                        var result = "<option value = \"${user.country}\"selected>${user.country}</option>";
+                        var countries = JSON.parse(data.responseText).countries;
+                        for (var i=0; i!=countries.length; ++i) {
+                            if (countries[i].countryName != "${user.country}") {
+                                result += "<option value=\"" + countries[i].countryName + "\">" + countries[i].countryName + "</option>";
+                            }
+                        }
+                        var select = document.getElementById("country-list");
+                        select.innerHTML = result;
+                    }
+                })
 
+        );
+
+        $(changeCitiesList());
+
+        function changeCitiesList() {
+            $.ajax('../json', {
+                method : 'get',
+                complete: function (data) {
+                    var countrySelected = document.getElementById('country-list').value;
+                    var citySelected = document.getElementById('cities-list').value;
+                    var result = "";
+                    var cities = JSON.parse(data.responseText).cities;
+                    var citiesOnly = [];
+
+                    for (var i=0; i!=cities.length; ++i) {
+                        if (cities[i].countryName == countrySelected) {
+                            for (var t=0; t!=cities[i].citiesList.length; ++t){
+                                if(cities[i].citiesList[t].cityName) {
+                                    citiesOnly[t] = cities[i].citiesList[t].cityName;
+                                    result += "<option value=\"" + cities[i].citiesList[t].cityName + "\">" + cities[i].citiesList[t].cityName + "</option>";
+                                }
+                            }
+                        }
+                    }
+
+                    var currentCountry = false;
+                    for(var h=0; h!=citiesOnly.length; ++h) {
+                        if (citiesOnly[h] == "${user.city}") {
+                            currentCountry = true;
+                            var result2 = result;
+                            result2 = result2.replace("<option value=\"${user.city}\">${user.city}</option>", "");
+                            result = "<option value = \"${user.city}\"selected>${user.city}</option>";
+                            result += result2;
+                        }
+                    }
+
+                    if(currentCountry == false) {
+                        var result2 = result;
+                        result = "<option value = \"\"selected>Your city</option>";
+                        result += result2;
+                    }
+
+                    var cityElement = document.getElementById("cities-list");
+                    cityElement.innerHTML = result;
+                }
+            });
+        }
+
+    </script>
+    <script>
+        $(document.getElementById("show-password")).click(function(){
+            var type = $(document.getElementsByName("password")[0]).attr('type') == "text" ? "password" : 'text',
+                    c = $(this).text() == "Hide" ? "Show" : "Hide";
+            $(this).text(c);
+            $(document.getElementsByName("password")[0]).prop('type', type);
+        });
+    </script>
 </head>
 <body onhashchange="OnHashChange (event);">
-<%--edit user dialog--%>
-<div class="edit-user-dialog" id="popup1">
-    <div class="edit-user-content">
-        <div class="input-form">
-            <div class="title">
-                <span>Edit Profile</span>
-            </div>
-            <form action="${pageContext.servletContext.contextPath}/user/edit" method="post">
-                <c:choose>
-                    <c:when test="${sessionScope.roleId == 1}">
-                        <div class="col">
-                            <div class="col-text">Id</div>
-                            <div class="col-input">
-                                <c:out value="${user.id}"/>
-                                <input type="hidden" name="id" value="${user.id}" readonly>
-                            </div>
-                        </div><br>
-                        <div class="col">
-                            <div class="col-text">Role</div>
-                            <div class="col-input">
-                                <select name="role-id">
-                                    <option selected value="${user.role.id}">${user.role.name}</option>
-                                    <c:forEach items="${roles}" var="role">
-                                        <c:if test="${user.role.id != role.id}">
-                                            <option value="${role.id}">${role.name}</option>
-                                        </c:if>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div><br>
-                    </c:when>
-                    <c:otherwise>
-                        <input type="hidden" name="id" value="${user.id}" readonly>
-                        <input type="hidden" name="role-id" value="${user.role.id}" readonly>
-                    </c:otherwise>
-                </c:choose>
-
-
-                <div class="col">
-                    <div class="col-text">Name</div>
-                    <div class="col-input">
-                        <input type="text" name="name" value="${user.name}">
-                    </div>
-                </div><br>
-                <div class="col">
-                    <div class="col-text">Login</div>
-                    <div class="col-input">
-                        <input type="text" name="login" value="${user.login}">
-                    </div>
-                </div><br>
-                <div class="col">
-                    <div class="col-text">Password</div>
-                    <div class="col-input show-password">
-                        <input type="password" name="password" value="${user.password}">
-                        <span id="show-password">Show</span>
-                    </div>
-                </div><br>
-                <div class="col">
-                    <div class="col-text">Email</div>
-                    <div class="col-input">
-                        <input type="text" name="email" value="${user.email}">
-                    </div>
-                </div><br>
-                <div class="col input-buttons">
-                    <input type="submit" value="Submit">
-                    <a href="javascript:PopUpHide()">Cancel</a>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<%--edit user dialog--%>
 
 <%--main content--%>
 <div id="AppWrapper" style="width: 1920px; height: 100%;">
+    <%--edit user dialog--%>
+        <div class="listView FormCard popUp EditUserView" id="EditUserView" data-state data-view="popUpView" style="left: 0px; width: 1920px; margin-top:0;">
+
+            <!--header_frame-->
+            <div class="header_frame listHeader" data-comp="listHeader" style="margin-top: 60px; background-color: #fff;">
+
+                <!--view-->
+                <div class="full_box view">
+                    <div class="center_box">
+                        <div class="table">
+
+                            <!--left-->
+                            <div class="cell left">
+
+                                <!--page_tittle-->
+                                <div class="page_title big">
+                                    <h2 data-comp="formTitle">Edit Profile</h2>
+                                </div>
+                                <!--page_tittle-->
+
+                            </div>
+                            <!--/left-->
+
+                            <!--right-->
+                            <div class="cell right">
+
+                                <!--action-->
+                                <div class="action">
+                                    <a href="#backFromEditUserView" class="icon"><i class="icon-icontt_close"></i></a>
+                                </div>
+                                <!--/action-->
+
+                            </div>
+                            <!--/right-->
+
+                        </div>
+                    </div>
+                </div>
+                <!--/view-->
+
+            </div>
+            <!--header_frame-->
+
+            <!--content_frame-->
+            <div class="content_frame" data-comp="listBody" data-scroll="true" style="height: 500px; top: 122px; background-color: #fff;">
+                <div class="full_box content formView">
+                    <div class="center_box">
+
+                        <!--form-->
+                        <form name="editUser" action="${pageContext.servletContext.contextPath}/user/edit" method="post" novalidate="novalidate">
+                            <!--hidden_inputs-->
+                            <input type="hidden" name="id" value="${user.id}">
+                            <input type="hidden" name="role-id" value="${user.role.id}">
+                            <%--<input type="hidden" name="due_date" value="">--%>
+                            <%--<input type="hidden" name="list_id" value="">--%>
+                            <%--<input type="hidden" name="list_position" value="">--%>
+                            <!--/hidden_inputs-->
+
+                            <!--name-->
+                            <label for="name" class="primary">
+                                <h4 class="trans" data-orig_text="Task Name">Name</h4>
+                                <input type="text" autocomplete="off" required="" name="name" data-orig_text="Task Name" value="${user.name}" aria-required="true">
+                            </label>
+                            <!--name-->
+
+                            <!--name-->
+                            <label for="login" class="primary">
+                                <h4 class="trans" data-orig_text="Task Name">Login</h4>
+                                <input type="text" autocomplete="off" required="" name="login" data-orig_text="Task Name" value="${user.login}" aria-required="true">
+                            </label>
+                            <!--name-->
+
+                            <!--name-->
+                            <label for="password" class="primary">
+                                <h4 class="trans" data-orig_text="Task Name">Password</h4>
+                                <input type="password" autocomplete="off" required="" name="password" data-orig_text="Task Name" value="${user.password}" aria-required="true">
+                                <span id="show-password">Show</span>
+                            </label>
+                            <!--name-->
+
+                            <!--name-->
+                            <label for="email" class="primary">
+                                <h4 class="trans" data-orig_text="Task Name">Email</h4>
+                                <input type="text" autocomplete="off" required="" name="email" data-orig_text="Task Name" value="${user.email}" aria-required="true">
+                            </label>
+                            <!--name-->
+
+                            <%--city--%>
+                            <label for="country">
+                                <h4 class="trans" data-orig_text="project">Country</h4>
+                                <select id="country-list" name="country" onchange="changeCitiesList()">
+                                </select>
+                            </label>
+                            <%--/city--%>
+
+                            <%--city--%>
+                            <label for="city">
+                                <h4 class="trans" data-orig_text="project">City</h4>
+                                <select id="cities-list" name="city">
+                                </select>
+                            </label>
+                            <%--/city--%>
+
+                            <!--submit-->
+                            <input type="submit" value="">
+                            <!--/submit-->
+
+                        </form>
+                        <!--/form-->
+                    </div>
+                </div>
+            </div>
+            <!--/content_frame-->
+
+            <!--footer_frame-->
+            <div class="footer_frame" data-comp="listFooter" style="background-color: #fff;">
+                <div class="full_box footer">
+                    <div class="center_box">
+
+                        <!--formFooter-->
+                        <div class="formFooter right">
+                            <a href="#delete" class="trans form_button" data-orig_text="Delete" style="display: none;">Delete</a>
+                            <a href="#open" class="trans form_button" data-orig_text="Re-open" style="display: none;">Re-open</a>
+                            <a href="#close" class="trans form_button" data-orig_text="Mark as done" style="display: none;">Mark as done</a>
+                            <a href="#saveEditUser" class="trans form_button" data-orig_text="Add" style="position: absolute; right: 20px;">Save</a>
+                        </div>
+                        <!--/formFooter-->
+
+                    </div>
+                </div>
+            </div>
+            <!--/footer_frame-->
+
+        </div>
+    <%--edit user dialog--%>
+
 
     <!--app_nav-->
     <div id="AppNav" class="active" style="display: block; left: 0; width: 1920px;">
@@ -407,7 +544,7 @@
                                 src="<c:url value="/resources/img/avatar.png"/>"></div></span>
                         <span class="user-name"><c:out value="${user.name}"/></span> <span class="user-arrow">
 
-                            <a href="javascript:PopUpShow()">
+                            <a href="#EditUserView">
                                 <svg
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20px"
                             height="20px" viewBox="0 0 20 20" version="1.1" xml:space="preserve"

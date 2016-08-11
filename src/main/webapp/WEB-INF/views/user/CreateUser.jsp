@@ -14,7 +14,7 @@
                     method : 'get',
                     complete: function (data) {
                         var result = "<option value = \"\"selected>Your country</option>";
-                        var countries = JSON.parse(data.responseText);
+                        var countries = JSON.parse(data.responseText).countries;
                         for (var i=0; i!=countries.length; ++i) {
                             result += "<option value=\"" + countries[i].countryName + "\">" + countries[i].countryName + "</option>";
                         }
@@ -23,6 +23,26 @@
                     }
                 })
         );
+
+        function changeCitiesList() {
+            $.ajax('../json', {
+                method : 'get',
+                complete: function (data) {
+                    var result = "<option value = \"\"selected>Your city</option>";
+                    var country = document.getElementById('country-list').value;
+                    var cities = JSON.parse(data.responseText).cities;
+                    for (var i=0; i!=cities.length; ++i) {
+                        if (cities[i].countryName == country) {
+                            for (var t=0; t!=cities[i].citiesList.length; ++t){
+                                result += "<option value=\"" + cities[i].citiesList[t].cityName + "\">" + cities[i].citiesList[t].cityName + "</option>";
+                            }
+                        }
+                    }
+                    var cityElement = document.getElementById("cities-list");
+                    cityElement.innerHTML = result;
+                }
+            });
+        }
 
         function validate() {
             var result = true;
@@ -64,16 +84,23 @@
 
                 <label for="country">
                     <select id="country-list" name="country" required oninvalid="this.setCustomValidity('Please select your country from the list.')"
-                            oninput="setCustomValidity('')">
+                            oninput="setCustomValidity('')" onchange="changeCitiesList()">
                         <%--data from ajax--%>
                     </select>
 
                 </label>
             </div>
 
-            <div class="row row-city">
-                <span class="icon"><img src="<c:url value="/resources/img/icon-city.png"/>"></span>
-                <input type="text" name="city" placeholder="City" required><br>
+            <div class="row row-cities">
+                <span class="icon icon-city"><img src="<c:url value="/resources/img/icon-city.png"/>"></span>
+
+                <label for="cities">
+                    <select id="cities-list" name="city" required oninvalid="this.setCustomValidity('Please select your city from the list.')"
+                            oninput="setCustomValidity('')">
+                        <%--data from ajax--%>
+                    </select>
+
+                </label>
             </div>
             <%----%>
 

@@ -8,10 +8,16 @@ function OnHashChange (event) {
         document.forms.addTaskTop.submit();
     } else if(hash.indexOf("addTask") > -1) {
         document.getElementById("EditTaskView").classList.add("active");
+    } else if(hash.indexOf("backFromEditUserView") > -1) {
+        document.getElementById("EditUserView").classList.remove("active");
     } else if(hash.indexOf("back") > -1) {
         document.getElementById("EditTaskView").classList.remove("active");
     } else if(hash.indexOf("add") > -1) {
         document.forms.addTask.submit();
+    } else if(hash.indexOf("EditUserView") > -1) {
+        document.getElementById("EditUserView").classList.add("active");
+    } else if(hash.indexOf("saveEditUser") > -1) {
+        document.forms.editUser.submit();
     }
 
     if(hash.indexOf("allusers") > -1) {
